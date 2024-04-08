@@ -16,7 +16,7 @@
             android:name=".AccountSettingActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity2"
+            android:name=".MyOrdersActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

@@ -21,7 +21,7 @@
             android:background="@drawable/border_shadow_2">
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/imageViewBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="18dp"
@@ -37,9 +37,9 @@
                 android:layout_marginStart="40dp"
                 android:text="Thiết lập tài khoản"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-                app:layout_constraintStart_toEndOf="@+id/imageView3"
-                app:layout_constraintTop_toTopOf="@+id/imageView3" />
+                app:layout_constraintBottom_toBottomOf="@+id/imageViewBack"
+                app:layout_constraintStart_toEndOf="@+id/imageViewBack"
+                app:layout_constraintTop_toTopOf="@+id/imageViewBack" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

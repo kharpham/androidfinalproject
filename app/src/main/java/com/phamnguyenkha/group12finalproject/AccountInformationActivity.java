@@ -34,13 +34,13 @@ public class AccountInformationActivity extends AppCompatActivity {
         binding.forwardOrderInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AccountInformationActivity.this,PersonalInformationActivity.class));
+                startActivity(new Intent(AccountInformationActivity.this,MyOrdersActivity.class));
             }
         });
         binding.forwardAccountInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AccountInformationActivity.this,PersonalInformationActivity.class));
+                startActivity(new Intent(AccountInformationActivity.this,AccountSettingActivity.class));
             }
         });
 

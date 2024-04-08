@@ -6,14 +6,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.phamnguyenkha.group12finalproject.databinding.AccountSettingBinding;
+import com.phamnguyenkha.group12finalproject.databinding.MyOrdersBinding;
 
-public class AccountSettingActivity extends AppCompatActivity {
-    AccountSettingBinding binding;
+public class MyOrdersActivity extends AppCompatActivity {
+    MyOrdersBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.account_setting);
+        binding = MyOrdersBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         rollBack();
     }
 
@@ -21,9 +22,8 @@ public class AccountSettingActivity extends AppCompatActivity {
         binding.imageViewBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AccountSettingActivity.this,AccountInformationActivity.class));
+                startActivity(new Intent(MyOrdersActivity.this,AccountInformationActivity.class));
             }
         });
-
     }
 }
