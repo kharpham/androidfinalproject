@@ -73,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
                 View dialogView = getLayoutInflater().inflate(R.layout.dialog_forgot, null);
                 EditText emailBox = dialogView.findViewById(R.id.emailBox);
+                emailBox.requestFocus();
                 builder.setView(dialogView);
                 AlertDialog dialog = builder.create();
                 dialogView.findViewById(R.id.btnReset).setOnClickListener(new View.OnClickListener() {
