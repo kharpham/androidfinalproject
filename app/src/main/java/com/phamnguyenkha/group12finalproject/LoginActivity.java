@@ -37,7 +37,11 @@ public class  LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = binding.emailAddress.getText().toString().trim();
                 String password = binding.password.getText().toString().trim();
-
+                if (email.length() == 0 || password.length() == 0) {
+                    Toast.makeText(LoginActivity.this, "Thông tin đăng nhập không đầy đủ", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                progressDialog.setTitle("Đăng nhập vào tài khoản...");
                 progressDialog.show();
 
                 firebaseAuth.signInWithEmailAndPassword(email, password)
@@ -56,6 +60,7 @@ public class  LoginActivity extends AppCompatActivity {
                                 progressDialog.dismiss();
 
                                 Toast.makeText(LoginActivity.this, "Đăng nhập thất bại " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                return;
                             }
                         });
             }
@@ -65,14 +70,17 @@ public class  LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String email = binding.emailAddress.getText().toString().trim();
-                progressDialog.setTitle("Đang gửi lại ");
+                if (email.length() == 0) {
+                    Toast.makeText(LoginActivity.this, "Thông tin email không được thiếu", Toast.LENGTH_SHORT).show();
+                }
+                progressDialog.setTitle("Đang gửi thông tin xác nhận đến email");
                 progressDialog.show();
                 firebaseAuth.sendPasswordResetEmail(email)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
                                 progressDialog.dismiss();
-                                Toast.makeText(LoginActivity.this, "Email đặt lại mật khẩu đã được gửi", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Email đặt lại mật khẩu đã được gửi thành công", Toast.LENGTH_SHORT).show();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
