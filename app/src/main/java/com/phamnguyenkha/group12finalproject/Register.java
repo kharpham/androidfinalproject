@@ -71,14 +71,14 @@ public class Register extends AppCompatActivity {
                                 Intent intent = new Intent(Register.this, LoginActivity.class);
                                 startActivity(intent);
                                 firebaseFirestore.collection("users").document(FirebaseAuth.getInstance().getUid()).set(new UserModel(name, number, email));
-                                progressDialog.dismiss();
+                                progressDialog.cancel();
                                 finish();
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                progressDialog.dismiss();
+                                progressDialog.cancel();
                                 Toast.makeText(Register.this, "Tạo tài khoản thất bại: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                                 Log.e("Error", e.getMessage());
                             }
