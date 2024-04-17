@@ -21,7 +21,7 @@
             android:background="@drawable/border_shadow_2">
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/imageViewBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="18dp"
@@ -37,12 +37,12 @@
                 android:layout_marginStart="40dp"
                 android:text="Sửai tên"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-                app:layout_constraintStart_toEndOf="@+id/imageView3"
-                app:layout_constraintTop_toTopOf="@+id/imageView3" />
+                app:layout_constraintBottom_toBottomOf="@+id/imageViewBack"
+                app:layout_constraintStart_toEndOf="@+id/imageViewBack"
+                app:layout_constraintTop_toTopOf="@+id/imageViewBack" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/textViewSave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
@@ -64,6 +64,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout7">
 
         <EditText
+            android:id="@+id/edtName"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="10dp"

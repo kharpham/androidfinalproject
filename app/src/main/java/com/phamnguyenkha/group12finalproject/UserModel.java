@@ -1,15 +1,23 @@
 package com.phamnguyenkha.group12finalproject;
 
+import java.util.Date;
+
 public class UserModel {
-    public UserModel(){
 
+    private String name,number,email,address,avatarUrl ;
+    public Date dob;
+    private int gender;
+    public UserModel() {
+        // Empty constructor required for Firestore deserialization
     }
-    private String name,number,email ;
-
-    public UserModel(String name, String number, String email) {
+    public UserModel(String name, String number, String email, String address, String avatarUrl, Date dob, int gender) {
         this.name = name;
         this.number = number;
         this.email = email;
+        this.address = address;
+        this.avatarUrl = avatarUrl;
+        this.dob = dob;
+        this.gender = gender;
     }
 
     public String getName() {
@@ -34,5 +42,37 @@ public class UserModel {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+
+    public Date getDob() {
+        return dob;
+    }
+
+    public void setDob(Date dob) {
+        this.dob = dob;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
     }
 }

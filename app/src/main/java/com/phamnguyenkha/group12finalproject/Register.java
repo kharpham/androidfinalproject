@@ -17,6 +17,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import com.phamnguyenkha.group12finalproject.databinding.ActivityRegisterBinding;
 
+import java.util.Date;
+
 public class Register extends AppCompatActivity {
 
     private ActivityRegisterBinding binding;
@@ -41,7 +43,10 @@ public class Register extends AppCompatActivity {
                 String number = binding.phoneNumber.getText().toString().trim();
                 String email = binding.emailAddress.getText().toString().trim();
                 String password = binding.password.getText().toString().trim();
-
+                String address = "Chứ cung cấp địa chỉ";
+                String avatarUrl = "";
+                Date dob = null;
+                int gender = 0;
                 progressDialog.setMessage("Đang đăng ký...");
                 progressDialog.show();
 
@@ -52,7 +57,8 @@ public class Register extends AppCompatActivity {
                                 Toast.makeText(Register.this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(Register.this, LoginActivity.class);
                                 startActivity(intent);
-                                firebaseFirestore.collection("users").document(FirebaseAuth.getInstance().getUid()).set(new UserModel(name, number, email));
+
+                                firebaseFirestore.collection("users").document(FirebaseAuth.getInstance().getUid()).set(new UserModel(name, number, email, address, avatarUrl, dob, gender));
                                 progressDialog.cancel();
                                 finish();
                             }
