@@ -46,6 +46,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout16"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -59,13 +60,13 @@
             android:layout_height="50dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/contrainLayout_2"
+                android:id="@+id/delivery"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/contrainLayout_3"
+                app:layout_constraintEnd_toStartOf="@+id/history"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -75,9 +76,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:text="Đang giao"
-                    android:textColor="@color/blue"
                     android:textSize="16sp"
-                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -87,7 +86,6 @@
                     android:id="@+id/view1"
                     android:layout_width="0dp"
                     android:layout_height="1dp"
-                    android:background="@color/blue"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -96,14 +94,14 @@
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/contrainLayout_3"
+                android:id="@+id/history"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/contrainLayout_2"
+                app:layout_constraintStart_toEndOf="@+id/delivery"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
@@ -112,9 +110,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:text="Lịch sử đơn hàng"
-                    android:textColor="@color/gray"
                     android:textSize="16sp"
-                    android:textStyle="normal"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -124,7 +120,6 @@
                     android:id="@+id/view2"
                     android:layout_width="0dp"
                     android:layout_height="1dp"
-                    android:background="@color/gray"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -142,17 +137,19 @@
                 android:orientation="vertical" />
         </ScrollView>
 
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
 
     </LinearLayout>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp" />
+    <LinearLayout
+        android:id="@+id/containerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout16">
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Trạng thái khi View được chọn -->
+    <item android:state_selected="true" android:drawable="@color/gray" />
+    <!-- Trạng thái khi View được nhấn -->
+    <item android:state_pressed="true" android:drawable="@color/blue" />
+    <!-- Trạng thái mặc định -->
+    <item android:drawable="@android:color/transparent" />
+</selector>
