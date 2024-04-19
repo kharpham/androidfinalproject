@@ -3,9 +3,12 @@
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
@@ -22,7 +25,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
-    ArrayList<Product> products = new ArrayList<>();
+    ArrayList<Product> products;
     ArrayList<Category> categories = new ArrayList<>();
     CategoryAdapter adapter;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -33,7 +36,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         loadDataFromFireStore();
-        initAdapter();
+
+        binding.lvCats.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MainActivity.this, ProductActivity.class);
+                intent.putExtra("category", categories.get(position).getCategoryName());
+                intent.putExtra("categoryId", categories.get(position).getId());
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void loadDataFromFireStore() {
@@ -41,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+//                        categories = new ArrayList<>();
                         if (error != null) {
                             Log.e("Firestore error", error.getMessage());
                             return;
@@ -53,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
                                 categories.add(new Category(Id, CategoryName, ImagePath));
                             }
                         }
+                        initAdapter();
                         for (Category category : categories) {
                             Log.i("Category", category.getId() + " - " + category.getCategoryName() + " - " + category.getImagePath());
                         }
