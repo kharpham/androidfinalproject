@@ -4,8 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -13,6 +11,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.phamnguyenkha.group12finalproject.databinding.ActivityEditGenderBinding;
+import com.phamnguyenkha.model.UserModel;
 
 public class EditGenderActivity extends AppCompatActivity {
     ActivityEditGenderBinding binding;

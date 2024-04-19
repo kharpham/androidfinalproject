@@ -3,8 +3,6 @@ package com.phamnguyenkha.group12finalproject;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -17,10 +15,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.phamnguyenkha.group12finalproject.databinding.ModifyPersonalInformationNameBinding;
-import com.squareup.picasso.Picasso;
+import com.phamnguyenkha.model.UserModel;
 
 public class ModifyPersonalInformationNameActivity extends AppCompatActivity {
     ModifyPersonalInformationNameBinding binding;

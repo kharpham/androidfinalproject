@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import com.phamnguyenkha.group12finalproject.databinding.ActivityRegisterBinding;
+import com.phamnguyenkha.model.UserModel;
 
 import java.util.Date;
 

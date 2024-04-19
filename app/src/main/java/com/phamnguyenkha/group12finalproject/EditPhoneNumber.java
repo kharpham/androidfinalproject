@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
@@ -16,6 +15,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.phamnguyenkha.group12finalproject.databinding.ActivityEditPhoneNumberBinding;
+import com.phamnguyenkha.model.UserModel;
 
 public class EditPhoneNumber extends AppCompatActivity {
     ActivityEditPhoneNumberBinding binding;

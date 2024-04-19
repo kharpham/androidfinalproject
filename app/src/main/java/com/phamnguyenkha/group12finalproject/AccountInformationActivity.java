@@ -22,10 +22,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.phamnguyenkha.group12finalproject.databinding.AccountInformationBinding;
+import com.phamnguyenkha.model.UserModel;
 import com.squareup.picasso.Picasso;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class AccountInformationActivity extends AppCompatActivity {
     AccountInformationBinding binding;

@@ -1,4 +1,4 @@
-package com.phamnguyenkha.group12finalproject;
+package com.phamnguyenkha.model;
 
 import java.util.Date;
 
