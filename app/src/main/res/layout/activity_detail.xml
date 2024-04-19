@@ -8,16 +8,18 @@
     tools:context=".DetailActivity">
 
     <ScrollView
+        android:id="@+id/scrollView3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="78dp"
-        tools:layout_editor_absoluteY="-16dp">
+        tools:layout_editor_absoluteX="104dp"
+        tools:layout_editor_absoluteY="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="90dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -48,9 +50,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="TITLE"
+                    android:textColor="@color/dark_blue"
                     android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/dark_blue"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/productPrice"
@@ -60,7 +62,7 @@
                     android:gravity="end"
                     android:text="85000VND"
                     android:textColor="@color/red"
-                    android:textSize="16sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -89,32 +91,33 @@
                 android:id="@+id/textView27"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Description"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:padding="5dp"
-                android:textColor="@color/white"
                 android:background="@color/blue"
-                android:textStyle="bold"
-                android:textSize="16sp"/>
+                android:padding="5dp"
+                android:text="Description"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/textView28"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text='"Bộ bài Ma Sói"là một trò chơi giải đố tập thể phổ biến, trong đó người chơi tham gia vào một trò chơi vai trò, trong đó một nhóm người chơi bí mật giả là dân làng bình thường, trong khi một số người chơi khác giả là ma sói, và mục tiêu của họ là loại bỏ tất cả các dân làng. Bộ bài Ma Sói thường bao gồm các thẻ hoặc nhãn để xác định vai trò của từng người chơi trong trò chơi, bao gồm ma sói, bác sĩ, tiên tri, và dân làng. Trò chơi thường diễn ra qua các vòng đêm, khi mà ma sói thực hiện các vụ án giết người và các vai trò khác cố gắng để phát hiện và loại bỏ ma sói'
-                android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:textSize="16sp"
-                android:textColor="@color/dark_blue"/>
+                android:layout_marginEnd="16dp"
+                android:text='"Bộ bài Ma Sói"là một trò chơi giải đố tập thể phổ biến, trong đó người chơi tham gia vào một trò chơi vai trò, trong đó một nhóm người chơi bí mật giả là dân làng bình thường, trong khi một số người chơi khác giả là ma sói, và mục tiêu của họ là loại bỏ tất cả các dân làng. Bộ bài Ma Sói thường bao gồm các thẻ hoặc nhãn để xác định vai trò của từng người chơi trong trò chơi, bao gồm ma sói, bác sĩ, tiên tri, và dân làng. Trò chơi thường diễn ra qua các vòng đêm, khi mà ma sói thực hiện các vụ án giết người và các vai trò khác cố gắng để phát hiện và loại bỏ ma sói'
+                android:textColor="@color/dark_blue"
+                android:textSize="16sp" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp">
 
                 <TextView
                     android:id="@+id/textView29"
@@ -128,17 +131,93 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView30"
+                    android:id="@+id/tvDecrement"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    android:background="@drawable/edittext_background"
                     android:text="-"
+                    android:textColor="@color/blue"
                     android:textStyle="bold"
-                    android:background=""
+                    android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView29"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvQuantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="0"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tvDecrement"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="+"
+                    android:textColor="@color/blue"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tvQuantity"
+                    app:layout_constraintTop_toTopOf="parent" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </LinearLayout>
     </ScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@color/grey"
+        android:layout_width="0dp"
+        android:layout_height="75dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" >
+
+        <TextView
+            android:id="@+id/textView30"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:textSize="16sp"
+            android:text="Total Price"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textColor="@color/dark_blue"/>
+        <TextView
+            android:id="@+id/tvTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:textSize="16sp"
+            android:text="85000VND"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView30"
+            android:textColor="@color/dark_blue"
+            android:textStyle="bold"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonAddToCart"
+            style="@android:style/Widget.Button"
+            android:textColor="@color/white"
+            android:background="@color/blue"
+            android:textSize="20sp"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="Add to cart"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
