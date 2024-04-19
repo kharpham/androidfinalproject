@@ -1,6 +1,7 @@
 package com.phamnguyenkha.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,6 +68,7 @@ public class ProductAdapter extends BaseAdapter {
         holder.productStar.setText(String.valueOf(p.getStar()));
         holder.productName.setText(p.getProductName());
         holder.category.setText(category);
+        Log.i("category", category);
 
         return convertView;
 

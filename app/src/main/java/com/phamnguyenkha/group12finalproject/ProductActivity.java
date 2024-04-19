@@ -33,7 +33,7 @@ public class ProductActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityProductBinding.inflate(getLayoutInflater());
-
+        setContentView(binding.getRoot());
         getData();
         loadDataFromFireStore(categoryId);
     }
@@ -41,7 +41,9 @@ public class ProductActivity extends AppCompatActivity {
     private void getData() {
         Intent intent = getIntent();
         category = intent.getStringExtra("category");
+        Log.i("Category received", category);
         categoryId = intent.getIntExtra("categoryId", 0);
+        Log.i("Category ID received", String.valueOf(categoryId));
         binding.category.setText(category);
     }
 
@@ -59,18 +61,28 @@ public class ProductActivity extends AppCompatActivity {
                                 int Id = ((Long) dc.getDocument().get("Id")).intValue();
                                 int ImagePath = getResources().getIdentifier((String) dc.getDocument().get("ImagePath"), "drawable", getPackageName());
                                 String ProductName = (String) dc.getDocument().get("ProductName");
-                                double ProductPrice = ((double) dc.getDocument().get("ProductPrice"));
-                                int Star = ((Long) dc.getDocument().get("Star")).intValue();
+                                double ProductPrice = ((Long) dc.getDocument().get("ProductPrice")).doubleValue();
+//                                int Star = ((Double) dc.getDocument().get("Star")).intValue();
+                                Object starObj = dc.getDocument().get("Star");
+                                int star;
+
+                                if (starObj instanceof Long) {
+                                    star = ((Long) starObj).intValue();
+                                } else if (starObj instanceof Double) {
+                                    star = ((Double) starObj).intValue();
+                                } else {
+                                    // Handle other cases, such as null or unexpected types
+                                    star = 0; // Set a default value or handle the case accordingly
+                                }
                                 String Description = (String) dc.getDocument().get("Description");
                                 int CategoryId = ((Long) dc.getDocument().get("CategoryId")).intValue();
                                 int BestGame = ((Long) dc.getDocument().get("BestGame")).intValue();
-                                products.add(new Product(Id, ProductName, ProductPrice, BestGame, Description, ImagePath, CategoryId, Star));
+                                products.add(new Product(Id, ProductName, ProductPrice, BestGame, Description, ImagePath, CategoryId, star));
                             }
                         }
                         initAdapter();
+                        Log.i("Finish running adapter", "OK");
                     }
-
-
                 });
 
     }

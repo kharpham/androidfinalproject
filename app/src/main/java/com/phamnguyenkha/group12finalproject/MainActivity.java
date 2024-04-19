@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MainActivity.this, ProductActivity.class);
                 intent.putExtra("category", categories.get(position).getCategoryName());
+                Log.i("category", categories.get(position).getCategoryName());
                 intent.putExtra("categoryId", categories.get(position).getId());
                 startActivity(intent);
             }

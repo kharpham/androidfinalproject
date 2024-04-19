@@ -84,4 +84,18 @@ public class Product {
     public void setStar(int star) {
         Star = star;
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "Id=" + Id +
+                ", ProductName='" + ProductName + '\'' +
+                ", ProductPrice=" + ProductPrice +
+                ", BestGame=" + BestGame +
+                ", Description='" + Description + '\'' +
+                ", ImagePath=" + ImagePath +
+                ", CategoryId=" + CategoryId +
+                ", Star=" + Star +
+                '}';
+    }
 }
