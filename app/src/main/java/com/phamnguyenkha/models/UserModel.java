@@ -1,4 +1,4 @@
-package com.phamnguyenkha.model;
+package com.phamnguyenkha.models;
 
 import java.util.Date;
 

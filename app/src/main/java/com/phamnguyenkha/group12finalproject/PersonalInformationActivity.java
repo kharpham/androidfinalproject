@@ -33,7 +33,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.UploadTask;
 import com.phamnguyenkha.group12finalproject.databinding.PersonalInformationBinding;
-import com.phamnguyenkha.model.UserModel;
+import com.phamnguyenkha.models.UserModel;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;

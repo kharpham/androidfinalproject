@@ -18,7 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.phamnguyenkha.group12finalproject.databinding.ActivityEditDobBinding;
-import com.phamnguyenkha.model.UserModel;
+import com.phamnguyenkha.models.UserModel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

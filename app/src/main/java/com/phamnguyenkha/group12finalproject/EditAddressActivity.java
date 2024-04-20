@@ -16,7 +16,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.phamnguyenkha.group12finalproject.databinding.ActivityEditAddressBinding;
-import com.phamnguyenkha.model.UserModel;
+import com.phamnguyenkha.models.UserModel;
 
 public class EditAddressActivity extends AppCompatActivity {
     ActivityEditAddressBinding binding;

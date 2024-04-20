@@ -20,6 +20,10 @@
         android:theme="@style/Theme.Group12FinalProject"
         tools:targetApi="31">
         <activity
+            android:name=".MyOrdersActivity"
+            android:exported="true"
+             />
+        <activity
             android:name=".EditDob"
             android:exported="false" />
         <activity
@@ -53,8 +57,10 @@
             android:name=".AccountInformationActivity"
             android:exported="false" />
         <activity
-            android:name=".MyOrdersActivity"
-            android:exported="true">
+            android:name=".AdminActivity"
+            android:exported="true"
+            android:label="@string/title_activity_admin"
+            android:theme="@style/Theme.Group12FinalProject.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

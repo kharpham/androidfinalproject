@@ -16,7 +16,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.phamnguyenkha.group12finalproject.databinding.ModifyPersonalInformationNameBinding;
-import com.phamnguyenkha.model.UserModel;
+import com.phamnguyenkha.models.UserModel;
 
 public class ModifyPersonalInformationNameActivity extends AppCompatActivity {
     ModifyPersonalInformationNameBinding binding;

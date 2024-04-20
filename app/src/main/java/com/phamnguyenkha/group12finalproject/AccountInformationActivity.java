@@ -22,7 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.phamnguyenkha.group12finalproject.databinding.AccountInformationBinding;
-import com.phamnguyenkha.model.UserModel;
+import com.phamnguyenkha.models.UserModel;
 import com.squareup.picasso.Picasso;
 
 public class AccountInformationActivity extends AppCompatActivity {
