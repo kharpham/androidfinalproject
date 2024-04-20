@@ -1,6 +1,8 @@
 package com.phamnguyenkha.models;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable {
     int Id;
     String ProductName;
     double ProductPrice;

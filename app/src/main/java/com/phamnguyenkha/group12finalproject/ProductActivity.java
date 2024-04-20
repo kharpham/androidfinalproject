@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
@@ -36,8 +38,16 @@ public class ProductActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         getData();
         loadDataFromFireStore(categoryId);
+        binding.lvProducts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Product p = products.get(position);
+                Intent intent = new Intent(ProductActivity.this, DetailActivity.class);
+                intent.putExtra("product", p);
+                startActivity(intent);
+            }
+        });
     }
-
     private void getData() {
         Intent intent = getIntent();
         category = intent.getStringExtra("category");
