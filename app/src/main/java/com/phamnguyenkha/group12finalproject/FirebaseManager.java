@@ -1,5 +1,6 @@
 package com.phamnguyenkha.group12finalproject;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -24,14 +25,28 @@ public class FirebaseManager {
         firestore = FirebaseFirestore.getInstance();
     }
 
-    public void getProducts(final OnDataLoadedListener listener) {
+    public void getProducts( Context context,final OnDataLoadedListener listener) {
         firestore.collection("product").get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         List<Product> productList = new ArrayList<>();
                         for (DocumentSnapshot document : task.getResult()) {
-                            Product product = document.toObject(Product.class);
-                            productList.add(product);
+                            int id = document.getLong("Id").intValue();
+                            String productName = document.getString("ProductName");
+                            double productPrice = document.getDouble("ProductPrice");
+                            int bestGame = document.getLong("BestGame").intValue();
+                            String description = document.getString("Description");
+                            String imagePathName = document.getString("ImagePath");
+                            int imagePath = context.getResources().getIdentifier(imagePathName, "drawable", context.getPackageName());
+                            int categoryId = document.getLong("CategoryId").intValue();
+                            int star = 0;
+                            Object starObj = document.get("Star");
+                            if (starObj instanceof Long) {
+                                star = ((Long) starObj).intValue();
+                            } else if (starObj instanceof Double) {
+                                star = ((Double) starObj).intValue();
+                            }
+                            productList.add(new Product(id, productName, productPrice, bestGame, description, imagePath, categoryId, star));
                         }
                         listener.onDataLoaded(productList);
                     } else {
@@ -39,4 +54,5 @@ public class FirebaseManager {
                     }
                 });
     }
+
 }

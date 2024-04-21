@@ -45,7 +45,7 @@ public class ProductsFragment extends Fragment {
         listView.setAdapter(productAdapter);
 
         firebaseManager = new FirebaseManager();
-        firebaseManager.getProducts(new FirebaseManager.OnDataLoadedListener() {
+        firebaseManager.getProducts(getContext(),new FirebaseManager.OnDataLoadedListener() {
             @Override
             public void onDataLoaded(List<Product> productList) {
                 // Khi dữ liệu được tải xong, cập nhật danh sách sản phẩm cho adapter
