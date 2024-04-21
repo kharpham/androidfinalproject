@@ -11,6 +11,9 @@ public class Product implements Serializable {
     int ImagePath;
     int CategoryId;
     int Star;
+    public Product() {
+        // Hàm tạo không đối số
+    }
 
     public Product(int id, String productName, double productPrice, int bestGame, String description, int imagePath, int categoryId, int star) {
         Id = id;
