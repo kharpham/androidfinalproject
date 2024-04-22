@@ -83,7 +83,7 @@ public class ProductsFragment extends Fragment {
                     window.setGravity(Gravity.BOTTOM);
 //                    window.setWindowAnimations(R.style.DialogAnimation);
                 }
-                ImageView productImage = dialog.findViewById(R.id.productImage);
+                ImageView productImage = dialog.findViewById(R.id.imageProduct);
                 TextView productName = dialog.findViewById(R.id.textViewName);
                 TextView productPrice = dialog.findViewById(R.id.editTextPrice);
                 TextView productId = dialog.findViewById(R.id.productId);
@@ -91,7 +91,6 @@ public class ProductsFragment extends Fragment {
 
                 productImage.setImageResource(selectedProduct.getImagePath());
                 productName.setText(selectedProduct.getProductName());
-//                productPrice.setText(String.valueOf(selectedProduct.getProductPrice()));
                 double price = selectedProduct.getProductPrice();
                 String formattedPrice = NumberFormat.getCurrencyInstance(new Locale("vi", "VN")).format(price);
                 productPrice.setText(formattedPrice);
