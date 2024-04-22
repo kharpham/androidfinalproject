@@ -3,6 +3,12 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFF</color>
     <color name="blue">#1CA7E6</color>
+    <color name ="back_color">#13253D</color>
+    <color name ="bot_back_color">#203575</color>
+    <color name ="user_back_color">#6965FF</color>
+    <color name ="fab_color">#6B6AFF</color>
+
+
     <color name="gray">#6D6D6D</color>
     <color name="light_gray">#F5f5f5</color>
 </resources>
