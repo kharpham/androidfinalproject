@@ -9,8 +9,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import com.phamnguyenkha.models.Product;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class FirebaseManager {
     private final FirebaseFirestore firestore;
