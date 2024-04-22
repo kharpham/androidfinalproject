@@ -1,7 +1,6 @@
 package com.phamnguyenkha.group12finalproject;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -9,10 +8,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import com.phamnguyenkha.models.Product;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class FirebaseManager {
     private final FirebaseFirestore firestore;
@@ -52,7 +49,7 @@ public class FirebaseManager {
                         }
                         listener.onDataLoaded(productList);
                     } else {
-                        listener.onError("Lỗi khi tải dữ liệu từ Firebase Firestore: " + task.getException().getMessage());
+                        listener.onError("Lỗi tải dữ liệu từ Firebase Firestore: " + task.getException().getMessage());
                     }
                 });
     }
