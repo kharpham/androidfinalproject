@@ -44,7 +44,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.viewholder> {
         Product p = products.get(position);
         holder.productName.setText(p.getProductName());
         holder.productPrice.setText(p.getProductPrice()+"VND");
-        holder.totalProductPrice.setText(p.getNumberInCart() + "* " + p.getNumberInCart() * p.getProductPrice() + "VND");
+        holder.totalProductPrice.setText(p.getNumberInCart() * p.getProductPrice() + "VND");
         holder.tvQuantity.setText(String.valueOf(p.getNumberInCart()));
         Glide.with(holder.itemView.getContext())
                 .load(p.getImagePath())
@@ -78,7 +78,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.viewholder> {
 
     @Override
     public int getItemCount() {
-        return 0;
+        return products.size();
     }
 
     public static class viewholder extends RecyclerView.ViewHolder {

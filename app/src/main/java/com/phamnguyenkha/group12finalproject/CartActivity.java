@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -26,8 +27,14 @@ public class CartActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         managementCart = new ManagmentCart(this);
+        binding.btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
-        setVariable();
+
         calculateCart();
         initList();
 
@@ -38,12 +45,14 @@ public class CartActivity extends AppCompatActivity {
         if (managementCart.getListCart().isEmpty()) {
             binding.empty.setVisibility(View.VISIBLE);
             binding.scrollViewCart.setVisibility(View.GONE);
+            Log.i("cart", "empty");
         }
         else {
             binding.scrollViewCart.setVisibility(View.VISIBLE);
             binding.empty.setVisibility(View.GONE);
+            Log.i("cart", "not empty");
         }
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         binding.cardView.setLayoutManager(linearLayoutManager);
         adapter = new CartAdapter(managementCart.getListCart(), this, new ChangeNumberItemsListener() {
             @Override
@@ -70,8 +79,5 @@ public class CartActivity extends AppCompatActivity {
 
     }
 
-    private void setVariable() {
-        binding.btnBack.setOnClickListener(v -> finish());
 
-    }
 }
