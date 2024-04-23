@@ -2,6 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,16 +27,41 @@
         android:theme="@style/Theme.Group12FinalProject"
         tools:targetApi="31">
         <activity
-            android:name=".Register"
-            android:exported="false"/>
-        <activity
-            android:name=".AccountSettingActivity"
+            android:name=".ChatbotActivity"
             android:exported="false" />
+
         <activity
             android:name=".MyOrdersActivity"
             android:exported="false" />
         <activity
+            android:name=".EditDob"
+            android:exported="false" />
+        <activity
+            android:name=".EditPhoneNumber"
+            android:exported="false" />
+        <activity
+            android:name=".EditAddressActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditGenderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ModifyPersonalInformationNameActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Register"
+            android:exported="false" />
+        <activity
+            android:name=".AccountSettingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProductActivity"
             android:exported="false" />
         <activity
             android:name=".PersonalInformationActivity"
@@ -31,13 +70,21 @@
             android:name=".AccountInformationActivity"
             android:exported="false" />
         <activity
+            android:name=".AdminActivity"
+            android:exported="false"
+            android:label="@string/title_activity_admin"
+            android:theme="@style/Theme.Group12FinalProject.NoActionBar"
+            />
+        <activity
             android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
