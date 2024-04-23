@@ -50,11 +50,11 @@ public class ProductAdapter extends BaseAdapter {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(itemLayout, null);
 
-//            holder.productImage = convertView.findViewById(R.id.productImage);
-//            holder.productName = convertView.findViewById(R.id.productName);
-//            holder.productStar = convertView.findViewById(R.id.productStar);
-//            holder.productPrice = convertView.findViewById(R.id.productPrice);
-//            holder.category = convertView.findViewById(R.id.category);
+            holder.productImage = convertView.findViewById(R.id.productImage);
+            holder.productName = convertView.findViewById(R.id.productName);
+            holder.productStar = convertView.findViewById(R.id.productStar);
+            holder.productPrice = convertView.findViewById(R.id.productPrice);
+            holder.category = convertView.findViewById(R.id.category);
 
             convertView.setTag(holder);
         }

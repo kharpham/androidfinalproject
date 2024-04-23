@@ -49,8 +49,8 @@ public class CategoryAdapter extends BaseAdapter {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(itemLayout, null);
 
-//            holder.catImage = convertView.findViewById(R.id.catImage);
-//            holder.catName = convertView.findViewById(R.id.catName);
+            holder.catImage = convertView.findViewById(R.id.catImage);
+            holder.catName = convertView.findViewById(R.id.catName);
 
             convertView.setTag(holder);
         }

@@ -4,21 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
-    tools:context=".MainActivity"
-    android:orientation="vertical">
+    tools:context=".ProductActivity"
+    android:orientation="vertical"
+    android:padding="15dp">
     <TextView
+        android:id="@+id/category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="GAMEON"
+        android:textSize="35sp"
+        android:text="THE BAI"
         android:textStyle="bold"
-        android:textSize="30sp"
-        android:textColor="@color/blue"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:textColor="@color/blue"/>
     <ListView
-        android:id="@+id/lvCats"
+        android:id="@+id/lvProducts"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-
+        android:layout_height="wrap_content"/>
 </LinearLayout>
