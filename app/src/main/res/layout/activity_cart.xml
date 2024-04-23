@@ -16,7 +16,8 @@
         app:tint="@color/blue"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/arrow" />
+        app:srcCompat="@drawable/arrow"
+        android:elevation="10dp"/>
 
     <TextView
         android:textColor="@color/dark_blue"
