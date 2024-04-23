@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/border_shadow_4"
+    android:paddingBottom="12dp">
+
+    <LinearLayout
+        android:id="@+id/linearLayout18"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/round_back"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/bestProductImage"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:src="@drawable/gg" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/bestProductName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout18" />
+
+    <TextView
+        android:id="@+id/bestProductPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="price"
+        app:layout_constraintStart_toStartOf="@+id/bestProductName"
+        app:layout_constraintTop_toBottomOf="@+id/bestProductName" />
+
+    <TextView
+        android:id="@+id/textView40"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="VNĐ"
+        app:layout_constraintBottom_toBottomOf="@+id/bestProductPrice"
+        app:layout_constraintStart_toEndOf="@+id/bestProductPrice" />
+
+    <TextView
+        android:id="@+id/star"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="0"
+        app:layout_constraintBottom_toBottomOf="@+id/textView40"
+        app:layout_constraintStart_toEndOf="@+id/textView40" />
+
+    <ImageView
+        android:id="@+id/imageView14"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/star"
+        app:layout_constraintStart_toEndOf="@+id/star"
+        app:layout_constraintTop_toTopOf="@+id/star"
+        app:srcCompat="@drawable/star_icon" />
+</androidx.constraintlayout.widget.ConstraintLayout>
