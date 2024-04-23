@@ -52,7 +52,7 @@ public class Register extends AppCompatActivity {
                 String number = binding.phoneNumber.getText().toString().trim();
                 String email = binding.emailAddress.getText().toString().trim();
                 String password = binding.password.getText().toString().trim();
-                String address = "Chứ cung cấp địa chỉ";
+                String address = "Chứa cung cấp địa chỉ";
                 String avatarUrl = "";
                 Date dob = null;
                 int gender = 0;
@@ -61,10 +61,10 @@ public class Register extends AppCompatActivity {
                     Toast.makeText(Register.this, "Thông tin đăng ký không đầy đủ", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (!confirmation.equals(password)) {
-                    Toast.makeText(Register.this, "Mật khẩu không trùng khớp", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+//                if (!confirmation.equals(password)) {
+//                    Toast.makeText(Register.this, "Mật khẩu không trùng khớp", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
                 if (password.length() < 6) {
                     Toast.makeText(Register.this, "Mật khẩu phải tối thiếu 6 ký tự", Toast.LENGTH_SHORT).show();
                     return;

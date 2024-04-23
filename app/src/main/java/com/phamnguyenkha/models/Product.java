@@ -24,6 +24,7 @@ public class Product implements Serializable {
         ImagePath = imagePath;
         CategoryId = categoryId;
         Star = star;
+
     }
 
     public int getId() {

@@ -28,6 +28,7 @@ import com.phamnguyenkha.group12finalproject.AccountInformationActivity;
 import com.phamnguyenkha.group12finalproject.FirebaseManager;
 import com.phamnguyenkha.group12finalproject.R;
 import com.phamnguyenkha.group12finalproject.databinding.FragmentProductsBinding;
+import com.phamnguyenkha.models.Category;
 import com.phamnguyenkha.models.Product;
 
 import java.text.NumberFormat;
@@ -60,12 +61,12 @@ public class ProductsFragment extends Fragment {
         firebaseManager = new FirebaseManager();
         firebaseManager.getProducts(getContext(),new FirebaseManager.OnDataLoadedListener() {
             @Override
-            public void onDataLoaded(List<Product> productList) {
+            public void onDataLoaded(List<Product> productList, List<Category>categoryList) {
                 // Khi dữ liệu được tải xong, cập nhật danh sách sản phẩm cho adapter
                 productAdapter.updateProducts(productList);
+                productAdapter.updateCategories(categoryList);
             }
             public void onError(String errorMessage) {
-                // Hiển thị Toast thông báo khi có lỗi xảy ra
                 Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
             }
         });
@@ -81,7 +82,6 @@ public class ProductsFragment extends Fragment {
                 if (window != null) {
                     window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
                     window.setGravity(Gravity.BOTTOM);
-//                    window.setWindowAnimations(R.style.DialogAnimation);
                 }
                 ImageView productImage = dialog.findViewById(R.id.imageProduct);
                 TextView productName = dialog.findViewById(R.id.textViewName);

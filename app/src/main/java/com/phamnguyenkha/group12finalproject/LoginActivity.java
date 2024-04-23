@@ -72,11 +72,21 @@ public class LoginActivity extends AppCompatActivity {
                             .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
-                                    progressDialog.dismiss();
-                                    Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                                    saveLoginInfo(email, password); // Lưu thông tin đăng nhập
-                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                    finish();
+                                    if (email.equals("admingameon@gmail.com")) {
+                                        // Người dùng là admin, chuyển hướng đến AdminActivity
+                                        progressDialog.dismiss();
+                                        Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                                        saveLoginInfo(email, password); // Lưu thông tin đăng nhập
+                                        startActivity(new Intent(LoginActivity.this, AdminActivity.class));
+                                        finish();
+                                    } else {
+                                        // Người dùng không phải là admin, chuyển hướng đến MainActivity
+                                        progressDialog.dismiss();
+                                        Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                                        saveLoginInfo(email, password); // Lưu thông tin đăng nhập
+                                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                        finish();
+                                    }
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {

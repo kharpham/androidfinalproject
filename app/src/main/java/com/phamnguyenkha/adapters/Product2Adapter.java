@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.phamnguyenkha.models.Category;
 import com.phamnguyenkha.models.Product;
 import com.phamnguyenkha.group12finalproject.R;
 
@@ -18,6 +19,7 @@ public class Product2Adapter extends BaseAdapter {
     private List<Product> productList;
     private LayoutInflater inflater;
     int product_item;
+    private List<Category> categoryList;
 
     public Product2Adapter(Context context, int product_item, List<Product> productList) {
         this.context = context;
@@ -53,7 +55,7 @@ public class Product2Adapter extends BaseAdapter {
             holder.productStar = convertView.findViewById(R.id.productStar);
             holder.productPrice = convertView.findViewById(R.id.textViewPrice);
             holder.productId = convertView.findViewById(R.id.textViewId);
-            holder.productCategory = convertView.findViewById(R.id.textViewCategory);
+            holder.productCategory = convertView.findViewById(R.id.textViewCategoryy);
 
             convertView.setTag(holder);
         } else {
@@ -68,13 +70,24 @@ public class Product2Adapter extends BaseAdapter {
         holder.productStar.setText(String.valueOf(product.getStar()));
         holder.productPrice.setText(String.valueOf(product.getProductPrice()));
         holder.productId.setText(String.valueOf("#" + product.getId()));
-        holder.productCategory.setText(String.valueOf(product.getCategoryId()));
-
-        return convertView;
+//        holder.productCategory.setText(String.valueOf(product.getCategoryId()));
+//        holder.productCategory.setText(String.valueOf(product.getCategoryName()));
+        String categoryName = "";
+        for (Category category : categoryList) {
+            if (category.getId() == product.getCategoryId()) {
+                categoryName = category.getCategoryName();
+                break;
+            }
+        }
+        holder.productCategory.setText(categoryName);        return convertView;
     }
 
     public void updateProducts(List<Product> productList) {
         this.productList = productList;
+        notifyDataSetChanged();
+    }
+    public void updateCategories(List<Category> categoryList) {
+        this.categoryList = categoryList;
         notifyDataSetChanged();
     }
 
