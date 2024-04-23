@@ -2,13 +2,12 @@
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
@@ -16,7 +15,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.phamnguyenkha.adapters.CategoryAdapter;
 import com.phamnguyenkha.group12finalproject.databinding.ActivityMainBinding;
 import com.phamnguyenkha.models.Category;
 import com.phamnguyenkha.models.Product;
@@ -27,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     ArrayList<Product> products;
     ArrayList<Category> categories = new ArrayList<>();
-    CategoryAdapter adapter;
+    Category2Adapter adapter;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +35,11 @@ public class MainActivity extends AppCompatActivity {
 
         loadDataFromFireStore();
         addEvents();
-
-        binding.lvCats.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        RecyclerView recyclerViewCats = findViewById(R.id.lvCats);
+        Category2Adapter adapter = new Category2Adapter(this, categories);
+        recyclerViewCats.setAdapter(adapter);
+        adapter.setOnItemClickListener(new Category2Adapter.OnItemClickListener() {
+            public void onItemClick(int position) {
                 Intent intent = new Intent(MainActivity.this, ProductActivity.class);
                 intent.putExtra("category", categories.get(position).getCategoryName());
                 Log.i("category", categories.get(position).getCategoryName());
@@ -48,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
 
     }
 
