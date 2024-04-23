@@ -13,9 +13,11 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupMenu;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +44,8 @@ public class ProductsFragment extends Fragment {
     private ListView listView;
     private Product2Adapter productAdapter;
     private FirebaseManager firebaseManager;
+    private List<Category> categoryList;
+    private List<Category> CategoryList;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -65,11 +69,13 @@ public class ProductsFragment extends Fragment {
                 // Khi dữ liệu được tải xong, cập nhật danh sách sản phẩm cho adapter
                 productAdapter.updateProducts(productList);
                 productAdapter.updateCategories(categoryList);
+                CategoryList = categoryList;
             }
             public void onError(String errorMessage) {
                 Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
             }
         });
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -88,6 +94,7 @@ public class ProductsFragment extends Fragment {
                 TextView productPrice = dialog.findViewById(R.id.editTextPrice);
                 TextView productId = dialog.findViewById(R.id.productId);
                 TextView description = dialog.findViewById(R.id.editTextDescription);
+                Spinner categorySpinner = dialog.findViewById(R.id.editCategory);
 
                 productImage.setImageResource(selectedProduct.getImagePath());
                 productName.setText(selectedProduct.getProductName());
@@ -97,6 +104,24 @@ public class ProductsFragment extends Fragment {
                 String formattedId = "#" + String.valueOf(selectedProduct.getId());
                 productId.setText(formattedId);
                 description.setText(selectedProduct.getDescription());
+                int selectedCategoryId = selectedProduct.getCategoryId();
+                List<String> categoryNameList = new ArrayList<>();
+                for (Category category : CategoryList) {
+                    categoryNameList.add(category.getCategoryName());
+                }
+
+                ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, categoryNameList);
+                categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                categorySpinner.setAdapter(categoryAdapter);
+                int selectedPosition = -1;
+                for (int i = 0; i < CategoryList.size(); i++) {
+                    if (CategoryList.get(i).getId() == selectedCategoryId) {
+                        selectedPosition = i;
+                        break;
+                    }
+                }
+                categorySpinner.setSelection(selectedPosition);
 
                 dialog.show();
             }
@@ -117,7 +142,9 @@ public class ProductsFragment extends Fragment {
         return root;
 
     }
-
+    public void setCategoryList(List<Category> categoryList) {
+        this.categoryList = categoryList;
+    }
     private void showPopupMenu(View filterLayout) {
         PopupMenu popupMenu = new PopupMenu(requireContext(), filterLayout);
         popupMenu.getMenuInflater().inflate(R.menu.filter_menu, popupMenu.getMenu());

@@ -8,6 +8,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
+import com.phamnguyenkha.group12finalproject.ui.products.ProductsFragment;
 import com.phamnguyenkha.models.Category;
 import com.phamnguyenkha.models.Product;
 
@@ -51,7 +52,6 @@ public class FirebaseManager {
                             productList.add(new Product(id, productName, productPrice, bestGame, description, imagePath, categoryId, star));
                         }
 
-                        // Sau khi tải danh sách sản phẩm, tiếp tục tải danh sách category
                         firestore.collection("category").get()
                                 .addOnCompleteListener(categoryTask -> {
                                     if (categoryTask.isSuccessful()) {
@@ -59,10 +59,9 @@ public class FirebaseManager {
                                         for (DocumentSnapshot categoryDocument : categoryTask.getResult()) {
                                             int categoryId = categoryDocument.getLong("Id").intValue();
                                             String categoryName = categoryDocument.getString("CategoryName");
-                                            // Không cần imagePath trong lớp Category nên có thể để null
+                                            // Không cần imagePath trong lớp Category nên có thể để -1
                                             categoryList.add(new Category(categoryId, categoryName, -1));
                                         }
-
                                         // Gọi phương thức callback để trả về cả danh sách sản phẩm và danh sách category
                                         listener.onDataLoaded(productList, categoryList);
                                     } else {
