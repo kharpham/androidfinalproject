@@ -18,7 +18,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.phamnguyenkha.group12finalproject.databinding.ActivityRegisterBinding;
+import com.phamnguyenkha.models.UserModel;
 
+import java.util.Date;
 import java.util.regex.Pattern;
 
 public class Register extends AppCompatActivity {
@@ -54,7 +56,7 @@ public class Register extends AppCompatActivity {
                 String avatarUrl = "";
                 Date dob = null;
                 int gender = 0;
-                String confirmation = binding.confirmation.getText().toString().trim();
+                String confirmation = binding.signup.getText().toString().trim();
                 if (name.length() == 0 || number.length() == 0 || email.length() == 0 || password.length() == 0 || confirmation.length() == 0) {
                     Toast.makeText(Register.this, "Thông tin đăng ký không đầy đủ", Toast.LENGTH_SHORT).show();
                     return;
@@ -67,7 +69,7 @@ public class Register extends AppCompatActivity {
                     Toast.makeText(Register.this, "Mật khẩu phải tối thiếu 6 ký tự", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (!binding.checkBox.isChecked()) {
+                if (!binding.checkBoxTerms.isChecked()) {
                     Toast.makeText(Register.this, "Bạn phải đồng ý với các chính sách bảo mật và bản quyền", Toast.LENGTH_SHORT).show();
                     return;
                 }

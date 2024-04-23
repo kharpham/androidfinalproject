@@ -12,18 +12,18 @@
         android:id="@+id/idRVChats"
         android:layout_width="match_parent"
         android:layout_height="800dp"
-        android:layout_above="@id/idRLMsg">
+        android:layout_above="@id/idRLMs">
 
     </androidx.recyclerview.widget.RecyclerView>
 
     <RelativeLayout
-        android:id="@+id/idRLMsg"
+        android:id="@+id/idRLMs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
 
-        <TextView
-            android:id="@+id/idedtMessage"
+        <EditText
+            android:id="@+id/idRLMsg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nhập tin nhắn"
