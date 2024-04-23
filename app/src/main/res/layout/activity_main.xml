@@ -15,6 +15,13 @@
         android:textSize="30sp"
         android:textColor="@color/blue"
         android:gravity="center"/>
+    <Button
+        android:id="@+id/btnCart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Cart"
+        android:backgroundTint="@color/blue"/>
     <ListView
         android:id="@+id/lvCats"
         android:layout_width="match_parent"

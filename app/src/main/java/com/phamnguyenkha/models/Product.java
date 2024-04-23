@@ -11,8 +11,9 @@ public class Product implements Serializable {
     int ImagePath;
     int CategoryId;
     int Star;
+    int NumberInCart;
 
-    public Product(int id, String productName, double productPrice, int bestGame, String description, int imagePath, int categoryId, int star) {
+    public Product(int id, String productName, double productPrice, int bestGame, String description, int imagePath, int categoryId, int star, int numberInCart) {
         Id = id;
         ProductName = productName;
         ProductPrice = productPrice;
@@ -21,6 +22,7 @@ public class Product implements Serializable {
         ImagePath = imagePath;
         CategoryId = categoryId;
         Star = star;
+        NumberInCart = numberInCart;
     }
 
     public int getId() {
@@ -99,5 +101,13 @@ public class Product implements Serializable {
                 ", CategoryId=" + CategoryId +
                 ", Star=" + Star +
                 '}';
+    }
+
+    public int getNumberInCart() {
+        return NumberInCart;
+    }
+
+    public void setNumberInCart(int numberInCart) {
+        NumberInCart = numberInCart;
     }
 }

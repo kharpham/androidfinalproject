@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         loadDataFromFireStore();
+        addEvents();
 
         binding.lvCats.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -79,5 +80,14 @@ public class MainActivity extends AppCompatActivity {
     private void initAdapter() {
         adapter = new CategoryAdapter(MainActivity.this, R.layout.category_layout, categories);
         binding.lvCats.setAdapter(adapter);
+    }
+
+    private void addEvents() {
+        binding.btnCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, CartActivity.class));
+            }
+        });
     }
 }
