@@ -49,7 +49,7 @@ public class FirebaseManager {
                             } else if (starObj instanceof Double) {
                                 star = ((Double) starObj).intValue();
                             }
-                            productList.add(new Product(id, productName, productPrice, bestGame, description, imagePath, categoryId, star));
+                            productList.add(new Product(id, productName, productPrice, bestGame, description, imagePath, categoryId, star,-1));
                         }
 
                         firestore.collection("category").get()
