@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                             list.add(new Category(Id, CategoryName, ImagePath ));
                         }
                         if (list.size() > 0) {
-                            binding.recyclerBestGame.setLayoutManager(new GridLayoutManager(MainActivity.this, 3));
+                            binding.recyclerCategory.setLayoutManager(new GridLayoutManager(MainActivity.this, 3));
                             RecyclerView.Adapter adapter = new CategoryAdapter(list);
                             binding.recyclerCategory.setAdapter(adapter);
                             binding.progressBarCategory.setVisibility(View.GONE);
