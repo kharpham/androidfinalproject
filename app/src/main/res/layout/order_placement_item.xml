@@ -18,7 +18,7 @@
             android:background="@drawable/border_shadow_3">
 
             <ImageView
-                android:id="@+id/productImagezz"
+                android:id="@+id/productImageOd"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginStart="10dp"
@@ -35,11 +35,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:orientation="vertical"
-                app:layout_constraintStart_toEndOf="@+id/productImagezz"
-                app:layout_constraintTop_toTopOf="@+id/productImagezz">
+                app:layout_constraintStart_toEndOf="@+id/productImageOd"
+                app:layout_constraintTop_toTopOf="@+id/productImageOd">
 
                 <TextView
-                    android:id="@+id/productNamezz"
+                    android:id="@+id/productNameOd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Name"
@@ -47,7 +47,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/productPricezz"
+                    android:id="@+id/productPriceOd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"

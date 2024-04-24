@@ -43,9 +43,9 @@ public class OrderAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.order_placement_item, parent, false);
             holder = new ViewHolder();
-            holder.productImage = convertView.findViewById(R.id.productImage);
-            holder.productName = convertView.findViewById(R.id.productName);
-            holder.productPrice = convertView.findViewById(R.id.productPrice);
+            holder.productImage = convertView.findViewById(R.id.productImageOd);
+            holder.productName = convertView.findViewById(R.id.productNameOd);
+            holder.productPrice = convertView.findViewById(R.id.productPriceOd);
             holder.quantity = convertView.findViewById(R.id.quantity);
             convertView.setTag(holder);
         } else {
@@ -53,7 +53,7 @@ public class OrderAdapter extends BaseAdapter {
         }
 
         Product product = (Product) getItem(position);
-        // Load image, set name, price, and quantity to corresponding views
+        holder.productImage.setImageResource(product.getImagePath());
         holder.productName.setText(product.getProductName());
         holder.productPrice.setText(product.getProductPrice() + " VND");
         holder.quantity.setText("x" + product.getNumberInCart());

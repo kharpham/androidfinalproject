@@ -94,7 +94,7 @@
                     android:id="@+id/textViewLocation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="[Tên Khách Hàng][0366 599 799]\n[100 Lý Thái Tổ, thị trấn GHIII, huyện UIHJKK, tỉnh UHHIII]" />
+                    android:text="[Tên Khách Hàng][Sđt]\n[Địa chỉ]" />
 
             </LinearLayout>
 
