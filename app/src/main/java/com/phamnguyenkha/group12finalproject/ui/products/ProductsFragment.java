@@ -27,10 +27,12 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.phamnguyenkha.adapters.Product2Adapter;
 import com.phamnguyenkha.group12finalproject.AccountInformationActivity;
 import com.phamnguyenkha.group12finalproject.FirebaseManager;
 import com.phamnguyenkha.group12finalproject.R;
+
 import com.phamnguyenkha.group12finalproject.databinding.FragmentProductsBinding;
 import com.phamnguyenkha.models.Category;
 import com.phamnguyenkha.models.Product;
@@ -57,7 +59,17 @@ public class ProductsFragment extends Fragment {
 
         binding = FragmentProductsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        FloatingActionButton addButton = root.findViewById(R.id.add);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Xử lý sự kiện khi nút được nhấn
+                // Ví dụ: Mở một Dialog hoặc chuyển hướng đến màn hình thêm sản phẩm mới
+                showDialogToAddProduct();
 
+
+            }
+        });
         final TextView textView = binding.textHome;
         productViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
@@ -73,7 +85,7 @@ public class ProductsFragment extends Fragment {
                 productAdapter.updateProducts(productList);
                 productAdapter.updateCategories(categoryList);
                 CategoryList = categoryList;
-                ProductList =productList;
+                ProductList = productList;
             }
             public void onError(String errorMessage) {
                 Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
@@ -146,6 +158,27 @@ public class ProductsFragment extends Fragment {
         return root;
 
     }
+
+    private void showDialogToAddProduct() {
+        Dialog dialog = new Dialog(requireContext());
+        dialog.setContentView(R.layout.dialog_product);
+        Window window = dialog.getWindow();
+        if (window != null) {
+            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+            window.setGravity(Gravity.BOTTOM);
+        }
+
+        ImageView productImage = dialog.findViewById(R.id.imageProduct);
+        TextView productName = dialog.findViewById(R.id.textViewName);
+        TextView productPrice = dialog.findViewById(R.id.editTextPrice);
+        TextView productId = dialog.findViewById(R.id.productId);
+        TextView description = dialog.findViewById(R.id.editTextDescription);
+        Spinner categorySpinner = dialog.findViewById(R.id.editCategory);
+
+        dialog.show();
+    }
+
+
     public void setCategoryList(List<Category> categoryList) {
         this.categoryList = categoryList;
     }
@@ -187,19 +220,22 @@ public class ProductsFragment extends Fragment {
                         subMenu.setGroupCheckable(0, true, true);
                         subMenu.setGroupEnabled(0, true);
                         // Thêm sự kiện lắng nghe cho mỗi mục trong submenu để lọc danh sách sản phẩm
-                        subMenu.setOnMenuItemClickListener(new SubMenu.OnMenuItemClickListener() {
-                            @Override
-                            public boolean onMenuItemClick(MenuItem subMenuItem) {
-                                // Lọc danh sách sản phẩm theo category được chọn
-                                int categoryId = subMenuItem.getItemId();
-                                Category selectedCategory = getCategoryById(categoryId);
-                                if (selectedCategory != null) {
-                                    filterProductsByCategory(selectedCategory);
-                                    return true;
+                        for (int i = 0; i < subMenu.size(); i++) {
+                            MenuItem subMenuItem = subMenu.getItem(i);
+                            subMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                                @Override
+                                public boolean onMenuItemClick(MenuItem menuItem) {
+                                    // Lọc danh sách sản phẩm theo category được chọn
+                                    int categoryId = menuItem.getItemId();
+                                    Category selectedCategory = getCategoryById(categoryId);
+                                    if (selectedCategory != null) {
+                                        filterProductsByCategory(selectedCategory);
+                                        return true;
+                                    }
+                                    return false;
                                 }
-                                return false;
-                            }
-                        });
+                            });
+                        }
                     }
                     return true;
                 } else if (id == R.id.option2) {

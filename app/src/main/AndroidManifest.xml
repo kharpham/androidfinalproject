@@ -70,14 +70,15 @@
             android:name=".AccountInformationActivity"
             android:exported="false" />
         <activity
-            android:name=".AdminActivity"
-            android:label="@string/title_activity_admin"
-            android:theme="@style/Theme.Group12FinalProject.NoActionBar"
+            android:name=".LoginActivity"
+
             android:exported="false"
 
             />
         <activity
-            android:name=".LoginActivity"
+            android:name=".AdminActivity"
+            android:label="@string/title_activity_admin"
+            android:theme="@style/Theme.Group12FinalProject.NoActionBar"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
