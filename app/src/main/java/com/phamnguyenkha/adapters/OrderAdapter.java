@@ -57,8 +57,6 @@ public class OrderAdapter extends BaseAdapter {
         holder.productName.setText(product.getProductName());
         holder.productPrice.setText(product.getProductPrice() + " VND");
         holder.quantity.setText("x" + product.getNumberInCart());
-        // Load product image here using Glide or any other image loading library
-        // Glide.with(context).load(product.getImageUrl()).into(holder.productImage);
 
         return convertView;
     }
