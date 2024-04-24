@@ -16,6 +16,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupMenu;
@@ -63,8 +65,6 @@ public class ProductsFragment extends Fragment {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Xử lý sự kiện khi nút được nhấn
-                // Ví dụ: Mở một Dialog hoặc chuyển hướng đến màn hình thêm sản phẩm mới
                 showDialogToAddProduct();
 
 
@@ -161,22 +161,21 @@ public class ProductsFragment extends Fragment {
 
     private void showDialogToAddProduct() {
         Dialog dialog = new Dialog(requireContext());
-        dialog.setContentView(R.layout.dialog_product);
+        dialog.setContentView(R.layout.dialog_add_product);
         Window window = dialog.getWindow();
         if (window != null) {
             window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
             window.setGravity(Gravity.BOTTOM);
         }
 
-        ImageView productImage = dialog.findViewById(R.id.imageProduct);
-        TextView productName = dialog.findViewById(R.id.textViewName);
-        TextView productPrice = dialog.findViewById(R.id.editTextPrice);
-        TextView productId = dialog.findViewById(R.id.productId);
-        TextView description = dialog.findViewById(R.id.editTextDescription);
+        EditText productNameEditText = dialog.findViewById(R.id.textViewName);
+        EditText productPriceEditText = dialog.findViewById(R.id.editTextPrice);
+        EditText descriptionEditText = dialog.findViewById(R.id.editTextDescription);
         Spinner categorySpinner = dialog.findViewById(R.id.editCategory);
 
         dialog.show();
     }
+
 
 
     public void setCategoryList(List<Category> categoryList) {
