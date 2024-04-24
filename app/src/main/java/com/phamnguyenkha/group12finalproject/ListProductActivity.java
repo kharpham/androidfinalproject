@@ -51,7 +51,7 @@ public class ListProductActivity extends AppCompatActivity {
         binding.progressBar.setVisibility(View.VISIBLE);
 
         Query ref;
-        if (isSearch == false) {
+        if (!isSearch) {
             ref = db.collection("product").orderBy("ProductName").whereEqualTo("CategoryId", CategoryId);
         }
         else {

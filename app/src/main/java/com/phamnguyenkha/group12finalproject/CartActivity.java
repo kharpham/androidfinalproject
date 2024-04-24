@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -37,8 +38,20 @@ public class CartActivity extends AppCompatActivity {
 
         calculateCart();
         initList();
+        addEvents();
 
 
+
+    }
+
+    private void addEvents() {
+        binding.buttonPlaceOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CartActivity.this, OrderPlacementActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initList() {
