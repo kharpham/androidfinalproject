@@ -86,7 +86,7 @@
                         android:layout_weight="1"
                         android:background="@color/grey"
                         android:ems="10"
-                        android:hint="Search Food..."
+                        android:hint="Tìm sản phẩm..."
                         android:inputType="text"
                         android:textAlignment="center"
                         android:textColor="@color/dark_blue"

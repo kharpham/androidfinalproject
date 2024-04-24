@@ -2,64 +2,64 @@ package com.phamnguyenkha.group12finalproject;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.phamnguyenkha.adapters.ProductAdapter;
+import com.phamnguyenkha.adapters.CategoryAdapter;
+import com.phamnguyenkha.adapters.ProductListAdapter;
+import com.phamnguyenkha.group12finalproject.databinding.ActivityListProductBinding;
 import com.phamnguyenkha.group12finalproject.databinding.ActivityProductBinding;
 import com.phamnguyenkha.models.Category;
 import com.phamnguyenkha.models.Product;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
-public class ProductActivity extends AppCompatActivity {
-    ActivityProductBinding binding;
-    String category;
-    int categoryId;
-    ArrayList<Product> products = new ArrayList<>();
-    ProductAdapter adapter;
+public class ListProductActivity extends AppCompatActivity {
+    ActivityListProductBinding binding;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+    int CategoryId;
+    String CategoryName;
+    String SearchText;
+    boolean isSearch;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityProductBinding.inflate(getLayoutInflater());
+        binding = ActivityListProductBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        getData();
-        loadDataFromFireStore(categoryId);
-        binding.lvProducts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Product p = products.get(position);
-                Intent intent = new Intent(ProductActivity.this, DetailActivity.class);
-                intent.putExtra("product", p);
-                startActivity(intent);
-            }
-        });
-    }
-    private void getData() {
-        Intent intent = getIntent();
-        category = intent.getStringExtra("category");
-        Log.i("Category received", category);
-        categoryId = intent.getIntExtra("categoryId", 0);
-        Log.i("Category ID received", String.valueOf(categoryId));
-        binding.category.setText(category);
+
+        getIntentExtra();
+        initList();
+
+
     }
 
-    private void loadDataFromFireStore(int categoryId) {
-        db.collection("product").whereEqualTo("CategoryId", categoryId)
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+    private void initList() {
+        ArrayList<Product> list = new ArrayList<>();
+        binding.progressBar.setVisibility(View.VISIBLE);
+
+        Query ref;
+        if (isSearch == false) {
+            ref = db.collection("product").orderBy("ProductName").whereEqualTo("CategoryId", CategoryId);
+        }
+        else {
+            ref = db.collection("product").orderBy("ProductName")
+                    .whereGreaterThanOrEqualTo("ProductName", SearchText)
+                    .whereLessThanOrEqualTo("ProductName", SearchText + "\uf8ff");
+        }
+        ref.addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         if (error != null) {
@@ -71,7 +71,7 @@ public class ProductActivity extends AppCompatActivity {
                                 int Id = ((Long) dc.getDocument().get("Id")).intValue();
                                 int ImagePath = getResources().getIdentifier((String) dc.getDocument().get("ImagePath"), "drawable", getPackageName());
                                 String ProductName = (String) dc.getDocument().get("ProductName");
-                                    double ProductPrice = ((Long) dc.getDocument().get("ProductPrice")).doubleValue();
+                                double ProductPrice = ((Long) dc.getDocument().get("ProductPrice")).doubleValue();
 //                                int Star = ((Double) dc.getDocument().get("Star")).intValue();
                                 Object starObj = dc.getDocument().get("Star");
                                 int star;
@@ -87,18 +87,34 @@ public class ProductActivity extends AppCompatActivity {
                                 String Description = (String) dc.getDocument().get("Description");
                                 int CategoryId = ((Long) dc.getDocument().get("CategoryId")).intValue();
                                 int BestGame = ((Long) dc.getDocument().get("BestGame")).intValue();
-                                products.add(new Product(Id, ProductName, ProductPrice, BestGame, Description, ImagePath, CategoryId, star, 1));
+                                list.add(new Product(Id, ProductName, ProductPrice, BestGame, Description, ImagePath, CategoryId, star, 1));
                             }
                         }
-                        initAdapter();
+                        if (list.size() > 0) {
+                            Log.i("List has one or more items", "OK");
+                            binding.productListView.setLayoutManager(new GridLayoutManager(ListProductActivity.this, 2));
+                            RecyclerView.Adapter adapter = new ProductListAdapter(list);
+                            binding.productListView.setAdapter(adapter);
+                            binding.progressBar.setVisibility(View.GONE);
+                        }
                         Log.i("Finish running adapter", "OK");
                     }
                 });
-
     }
 
-    private void initAdapter() {
-        adapter = new ProductAdapter(ProductActivity.this, R.layout.product_layout, products, category);
-        binding.lvProducts.setAdapter(adapter);
+    private void getIntentExtra() {
+        CategoryId = getIntent().getIntExtra("categoryId", 0);
+        CategoryName = getIntent().getStringExtra("categoryName");
+        SearchText = getIntent().getStringExtra("searchText");
+        isSearch = getIntent().getBooleanExtra("isSearch", false);
+
+        binding.textTitle.setText(CategoryName);
+        binding.btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        
     }
 }

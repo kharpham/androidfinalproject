@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -59,10 +60,32 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        binding.logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            }
+        });
+        binding.imageSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String text = binding.editSearch.getText().toString();
+                if (text.isEmpty()) {
+                    Toast.makeText(MainActivity.this, "Search text is required when filtering", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Intent intent = new Intent(MainActivity.this, ListProductActivity.class);
+                    intent.putExtra("isSearch", true);
+                    intent.putExtra("searchText", text);
+                    startActivity(intent);
+                }
+            }
+        });
     }
     private void initCategory() {
         ArrayList<Category> list = new ArrayList<>();
-        db.collection("product").whereEqualTo("BestGame", 1)
+        db.collection("category")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -83,6 +106,8 @@ public class MainActivity extends AppCompatActivity {
                             binding.recyclerCategory.setAdapter(adapter);
                             binding.progressBarCategory.setVisibility(View.GONE);
                         }
+                        for (Category c : list) {
+                            Log.i("Category", c.toString());}
                     }
                 });
     }
@@ -152,30 +177,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-//    private void loadDataFromFireStore() {
-//        db.collection("category").orderBy("Id", Query.Direction.ASCENDING)
-//                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-////                        categories = new ArrayList<>();
-//                        if (error != null) {
-//                            Log.e("Firestore error", error.getMessage());
-//                            return;
-//                        }
-//                        for (DocumentChange dc : value.getDocumentChanges()) {
-//                            if (dc.getType() == DocumentChange.Type.ADDED) {
-//                                int Id = ((Long) dc.getDocument().get("Id")).intValue();
-//                                int ImagePath = getResources().getIdentifier((String) dc.getDocument().get("ImagePath"), "drawable", getPackageName());
-//                                String CategoryName = (String) dc.getDocument().get("CategoryName");
-//                                categories.add(new Category(Id, CategoryName, ImagePath));
-//                            }
-//                        }
-//                        initAdapter();
-//                        for (Category category : categories) {
-//                            Log.i("Category", category.getId() + " - " + category.getCategoryName() + " - " + category.getImagePath());
-//                        }
-//                    }
-//                });
-//    }
 
 }
