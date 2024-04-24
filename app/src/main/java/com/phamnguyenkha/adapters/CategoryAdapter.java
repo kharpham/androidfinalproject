@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.recyclerview.widget.RecyclerView;
+
 
 import com.phamnguyenkha.group12finalproject.R;
 import com.phamnguyenkha.models.Category;
