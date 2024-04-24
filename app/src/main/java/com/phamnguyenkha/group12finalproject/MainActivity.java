@@ -84,10 +84,14 @@ public class MainActivity extends AppCompatActivity {
                         }
                         if (list.size() > 0) {
                             binding.recyclerBestGame.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false));
-                            BestGameAdapter adapter = new BestGameAdapter(list);
+                            RecyclerView.Adapter adapter = new BestGameAdapter(list);
                             binding.recyclerBestGame.setAdapter(adapter);
+                            binding.recyclerBestGame.setVisibility(View.GONE);
                         }
-                        binding.recyclerBestGame.setVisibility(View.GONE);
+                        for (Product p : list) {
+                            Log.i("Product", p.toString());
+                        }
+
 
                     }
                 });

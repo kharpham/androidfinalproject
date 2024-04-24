@@ -111,7 +111,7 @@
                     android:background="@drawable/grey_background"
                     android:padding="12dp"
                     app:tint="@color/blue"
-                    tools:srcCompat="@drawable/basket" />
+                    android:src="@drawable/basket"/>
             </LinearLayout>
 
             <LinearLayout
