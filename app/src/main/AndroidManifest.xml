@@ -75,10 +75,10 @@
             android:name=".PersonalInformationActivity"
             android:exported="false" />
         <activity
-            android:name=".AccountInformationActivity"
+            android:name=".LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".AccountInformationActivity"
             android:exported="false" />
         <activity
             android:name=".CartActivity"

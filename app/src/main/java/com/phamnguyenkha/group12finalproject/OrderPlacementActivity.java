@@ -15,15 +15,19 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.phamnguyenkha.adapters.OrderAdapter;
 import com.phamnguyenkha.group12finalproject.databinding.ActivityOrderPlacementBinding;
 import com.phamnguyenkha.helpers.ManagmentCart;
+import com.phamnguyenkha.models.Order;
 import com.phamnguyenkha.models.Product;
 import com.phamnguyenkha.models.UserModel;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class OrderPlacementActivity extends AppCompatActivity {
     ActivityOrderPlacementBinding binding;
     OrderAdapter orderAdapter;
     ArrayList<Product> products;
+    ManagmentCart managementCart;
+    ArrayList<Product> cartProducts;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,15 +37,56 @@ public class OrderPlacementActivity extends AppCompatActivity {
         loadData();
         forward();
         order();
+        ManagmentCart managementCart = new ManagmentCart(this);
+        ArrayList<Product> cartProducts = managementCart.getListCart();
     }
 
     private void order() {
         binding.buttonConfirmOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
+                if (currentUser != null) {
+                    if (cartProducts != null && !cartProducts.isEmpty()) {
+                        // Tạo một đơn hàng mới
+                        Order newOrder = new Order();
+                        newOrder.setUserId(currentUser.getUid());
+                        newOrder.setRecipientName(binding.textViewLocation.getText().toString()); // Đặt tên người nhận từ TextView
+                        newOrder.setOrderDate(new Date());
+                        double totalPrice = calculateTotalPrice(cartProducts);
+                        newOrder.setTotalPrice(totalPrice);
+                        newOrder.setProducts(cartProducts);
+
+
+                        saveOrderToFirestore(newOrder);
+
+                        clearCart();
+                        Toast.makeText(OrderPlacementActivity.this, "Đơn hàng của bạn đã được đặt thành công!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(OrderPlacementActivity.this, "Giỏ hàng của bạn đang trống!", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
+    }
+
+    private void clearCart() {
+        ManagmentCart managementCart = new ManagmentCart(OrderPlacementActivity.this);
+        managementCart.clearCart();
+    }
+
+    private void saveOrderToFirestore(Order newOrder) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("orders")
+                .add(newOrder)
+                .addOnSuccessListener(documentReference -> {
+
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(OrderPlacementActivity.this, "Lỗi: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
     }
 
     private void forward() {
@@ -60,10 +105,10 @@ public class OrderPlacementActivity extends AppCompatActivity {
     }
 
     private void loadData() {
-        ManagmentCart managementCart = new ManagmentCart(this); // Assuming "this" is the context
-        ArrayList<Product> cartProducts = managementCart.getListCart();
 
-        OrderAdapter orderAdapter = new OrderAdapter(this, cartProducts);
+         managementCart = new ManagmentCart(this);
+         cartProducts = managementCart.getListCart();
+        orderAdapter = new OrderAdapter(this, cartProducts);
 
         binding.listView.setAdapter(orderAdapter);
 
@@ -73,7 +118,7 @@ public class OrderPlacementActivity extends AppCompatActivity {
 
     private int calculateTotalPrice(ArrayList<Product> cartProducts) {
         int totalPrice = 0;
-        for (Product product : products) {
+        for (Product product : cartProducts) {
             totalPrice += (product.getNumberInCart() * product.getProductPrice());
         }
         return totalPrice;
