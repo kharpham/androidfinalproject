@@ -5,18 +5,11 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.Group12FinalProject" parent="Base.Theme.Group12FinalProject" />
-
-    <style name="Theme.Group12FinalProject.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+    <style name="Theme.Group12FinalProject" parent="Base.Theme.Group12FinalProject">
+        <item name="android:statusBarColor">@color/blue</item>
     </style>
-
-    <style name="Theme.Group12FinalProject.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="Theme.Group12FinalProject.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
     <style name="textStyle" parent="Widget.AppCompat.TextView">
-        <item name="android:textColor">@color/dark_blue</item>
+
         <item name="android:textSize">18sp</item>
 
     </style>
@@ -24,5 +17,9 @@
         <item name="android:textColor">@color/dark_blue</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
+    </style>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Other theme attributes -->
+
     </style>
 </resources>

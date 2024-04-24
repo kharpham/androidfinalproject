@@ -1,6 +1,7 @@
 package com.phamnguyenkha.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.phamnguyenkha.group12finalproject.DetailActivity;
 import com.phamnguyenkha.group12finalproject.R;
+import com.phamnguyenkha.helpers.ManagmentCart;
 import com.phamnguyenkha.models.Product;
 
 import java.util.ArrayList;
@@ -40,7 +43,7 @@ public class BestGameAdapter extends RecyclerView.Adapter<BestGameAdapter.viewho
     public void onBindViewHolder(@NonNull BestGameAdapter.viewholder holder, int position) {
         Product p = products.get(position);
         holder.textTitle.setText(p.getProductName());
-        holder.textPrice.setText(String.valueOf(p.getProductPrice())+"VND");
+        holder.textPrice.setText(String.format("%.0f VND",p.getProductPrice()));
         holder.textStar.setText(String.valueOf(p.getStar()));
         Glide.with(context)
                     .load(p.getImagePath())
@@ -50,6 +53,22 @@ public class BestGameAdapter extends RecyclerView.Adapter<BestGameAdapter.viewho
             @Override
             public void onClick(View v) {
 
+            }
+        });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, DetailActivity.class);
+                intent.putExtra("product", p);
+                context.startActivity(intent);
+            }
+        });
+        holder.itemView.findViewById(R.id.textPlus).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ManagmentCart managementCart = new ManagmentCart(context);
+                managementCart.insertProduct(p);
             }
         });
     }
