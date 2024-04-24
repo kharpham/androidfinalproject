@@ -68,9 +68,7 @@
             android:exported="false" />
         <activity
             android:name=".AdminActivity"
-            android:exported="false"
-            android:label="@string/title_activity_admin"
-            android:theme="@style/Theme.Group12FinalProject.NoActionBar" />
+            android:exported="false" />
         <activity
             android:name=".ProductActivity"
             android:exported="false" />
@@ -78,13 +76,13 @@
             android:name=".PersonalInformationActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".OrderPlacementActivity"
             android:exported="false" />
         <activity
             android:name=".AccountInformationActivity"
             android:exported="false" />
         <activity
-            android:name=".OrderPlacementActivity"
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
