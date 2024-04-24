@@ -79,7 +79,8 @@ public class Product2Adapter extends BaseAdapter {
                 break;
             }
         }
-        holder.productCategory.setText(categoryName);        return convertView;
+        holder.productCategory.setText(categoryName);
+        return convertView;
     }
 
     public void updateProducts(List<Product> productList) {

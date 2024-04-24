@@ -21,6 +21,8 @@ import java.util.ArrayList;
 
 public class OrderPlacementActivity extends AppCompatActivity {
     ActivityOrderPlacementBinding binding;
+    OrderAdapter orderAdapter;
+    ArrayList<Product> products;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +39,19 @@ public class OrderPlacementActivity extends AppCompatActivity {
         OrderAdapter orderAdapter = new OrderAdapter(this, cartProducts);
 
         binding.listView.setAdapter(orderAdapter);
+
+        int totalPrice = calculateTotalPrice(cartProducts);
+        binding.totalPrice.setText(String.valueOf(totalPrice));
     }
+
+    private int calculateTotalPrice(ArrayList<Product> cartProducts) {
+        int totalPrice = 0;
+        for (Product product : products) {
+            totalPrice += (product.getNumberInCart() * product.getProductPrice());
+        }
+        return totalPrice;
+    }
+
     private void userInfo() {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
