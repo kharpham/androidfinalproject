@@ -46,7 +46,6 @@ dependencies {
     implementation("androidx.activity:activity:1.8.0")
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
-
     implementation("androidx.activity:activity:1.9.0")
     implementation("com.google.firebase:firebase-auth:22.3.1")
     implementation("com.google.firebase:firebase-firestore:24.11.1")
