@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -46,6 +48,7 @@ public class ProductsFragment extends Fragment {
     private FirebaseManager firebaseManager;
     private List<Category> categoryList;
     private List<Category> CategoryList;
+    private List<Product> ProductList;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -70,6 +73,7 @@ public class ProductsFragment extends Fragment {
                 productAdapter.updateProducts(productList);
                 productAdapter.updateCategories(categoryList);
                 CategoryList = categoryList;
+                ProductList =productList;
             }
             public void onError(String errorMessage) {
                 Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
@@ -145,6 +149,24 @@ public class ProductsFragment extends Fragment {
     public void setCategoryList(List<Category> categoryList) {
         this.categoryList = categoryList;
     }
+    private void filterProductsByCategory(Category selectedCategory) {
+        List<Product> filteredProducts = new ArrayList<>();
+        for (Product product : ProductList) {
+            if (product.getCategoryId() == selectedCategory.getId()) {
+                filteredProducts.add(product);
+            }
+        }
+        // Cập nhật danh sách sản phẩm trên ListView hoặc RecyclerView
+        productAdapter.updateProducts(filteredProducts);
+    }
+    private Category getCategoryById(int categoryId) {
+        for (Category category : CategoryList) {
+            if (category.getId() == categoryId) {
+                return category;
+            }
+        }
+        return null;
+    }
     private void showPopupMenu(View filterLayout) {
         PopupMenu popupMenu = new PopupMenu(requireContext(), filterLayout);
         popupMenu.getMenuInflater().inflate(R.menu.filter_menu, popupMenu.getMenu());
@@ -153,7 +175,32 @@ public class ProductsFragment extends Fragment {
             public boolean onMenuItemClick(MenuItem item) {
                 int id = item.getItemId();
                 if (id == R.id.option1) {
-                    Toast.makeText(getContext(), "Option 1 selected", Toast.LENGTH_SHORT).show();
+                    // Option 1 selected, add submenu items
+                    SubMenu subMenu = item.getSubMenu();
+                    if (subMenu != null) {
+                        subMenu.clear();
+                        // Thêm các mục từ CategoryList vào submenu
+                        for (Category category : CategoryList) {
+                            subMenu.add(0, category.getId(), Menu.NONE, category.getCategoryName());
+                        }
+                        // Kích hoạt tính năng kiểm tra và kích hoạt nhóm để chúng có thể được chọn
+                        subMenu.setGroupCheckable(0, true, true);
+                        subMenu.setGroupEnabled(0, true);
+                        // Thêm sự kiện lắng nghe cho mỗi mục trong submenu để lọc danh sách sản phẩm
+                        subMenu.setOnMenuItemClickListener(new SubMenu.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem subMenuItem) {
+                                // Lọc danh sách sản phẩm theo category được chọn
+                                int categoryId = subMenuItem.getItemId();
+                                Category selectedCategory = getCategoryById(categoryId);
+                                if (selectedCategory != null) {
+                                    filterProductsByCategory(selectedCategory);
+                                    return true;
+                                }
+                                return false;
+                            }
+                        });
+                    }
                     return true;
                 } else if (id == R.id.option2) {
                     Toast.makeText(getContext(), "Option 2 selected", Toast.LENGTH_SHORT).show();
@@ -164,7 +211,6 @@ public class ProductsFragment extends Fragment {
         });
         popupMenu.show();
     }
-
 
 
     @Override
