@@ -13,6 +13,9 @@ public class Product implements Serializable {
     int Star;
     int NumberInCart;
 
+    public Product() {
+    }
+
     public Product(int id, String productName, double productPrice, int bestGame, String description, int imagePath, int categoryId, int star, int numberInCart) {
         Id = id;
         ProductName = productName;

@@ -1,7 +1,8 @@
-    package com.phamnguyenkha.group12finalproject;
+package com.phamnguyenkha.group12finalproject;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -19,12 +20,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.phamnguyenkha.adapters.BestGameAdapter;
 import com.phamnguyenkha.adapters.CategoryAdapter;
 import com.phamnguyenkha.group12finalproject.databinding.ActivityMainBinding;
 import com.phamnguyenkha.models.Category;
 import com.phamnguyenkha.models.Product;
 import com.phamnguyenkha.models.UserModel;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -39,11 +42,41 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         
         loadUser();
-        
-        
-
+        initBestFood();
 
     }
+
+    private void initBestFood() {
+        ArrayList<Product> list = new ArrayList<>();
+        db.collection("product").whereEqualTo("BestGame", 1)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+//                        categories = new ArrayList<>();
+                        if (error != null) {
+                            Log.e("Firestore error", error.getMessage());
+                            return;
+                        }
+                        for (DocumentChange dc : value.getDocumentChanges()) {
+
+//                                int Id = ((Long) dc.getDocument().get("Id")).intValue();
+//                                int ImagePath = getResources().getIdentifier((String) dc.getDocument().get("ImagePath"), "drawable", getPackageName());
+//                                String CategoryName = (String) dc.getDocument().get("CategoryName");
+//                                categories.add(new Category(Id, CategoryName, ImagePath));
+                            list.add(dc.getDocument().toObject(Product.class));
+                        }
+                        if (list.size() > 0) {
+                            binding.recyclerBestGame.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false));
+                            BestGameAdapter adapter = new BestGameAdapter(list);
+                            binding.recyclerBestGame.setAdapter(adapter);
+                        }
+                        binding.recyclerBestGame.setVisibility(View.GONE);
+
+                    }
+                });
+    }
+
+
 
     private void loadUser() {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -56,8 +89,10 @@ public class MainActivity extends AppCompatActivity {
                 UserModel userModel = documentSnapshot.toObject(UserModel.class);
                 if (userModel != null) {
                     binding.tvUserName.setText(userModel.getName());
+                }
+            }
+        });
     }
-
 //    private void loadDataFromFireStore() {
 //        db.collection("category").orderBy("Id", Query.Direction.ASCENDING)
 //                .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -84,5 +119,4 @@ public class MainActivity extends AppCompatActivity {
 //                });
 //    }
 
-    
 }
