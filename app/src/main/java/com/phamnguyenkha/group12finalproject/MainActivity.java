@@ -2,6 +2,7 @@ package com.phamnguyenkha.group12finalproject;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         
         loadUser();
         initBestGame();
+        initCategory();
         addEvents();
     }
 
@@ -58,7 +60,32 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
+    private void initCategory() {
+        ArrayList<Category> list = new ArrayList<>();
+        db.collection("product").whereEqualTo("BestGame", 1)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+//                        categories = new ArrayList<>();
+                        if (error != null) {
+                            Log.e("Firestore error", error.getMessage());
+                            return;
+                        }
+                        for (DocumentChange dc : value.getDocumentChanges()) {
+                            int Id = ((Long) dc.getDocument().get("Id")).intValue();
+                            int ImagePath = getResources().getIdentifier((String) dc.getDocument().get("ImagePath"), "drawable", getPackageName());
+                            String CategoryName = (String) dc.getDocument().get("CategoryName");
+                            list.add(new Category(Id, CategoryName, ImagePath ));
+                        }
+                        if (list.size() > 0) {
+                            binding.recyclerBestGame.setLayoutManager(new GridLayoutManager(MainActivity.this, 3));
+                            RecyclerView.Adapter adapter = new CategoryAdapter(list);
+                            binding.recyclerCategory.setAdapter(adapter);
+                            binding.progressBarCategory.setVisibility(View.GONE);
+                        }
+                    }
+                });
+    }
 
     private void initBestGame() {
         ArrayList<Product> list = new ArrayList<>();
