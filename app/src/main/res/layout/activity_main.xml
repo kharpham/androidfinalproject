@@ -111,7 +111,7 @@
                     android:background="@drawable/grey_background"
                     android:padding="12dp"
                     app:tint="@color/blue"
-                    tools:srcCompat="@drawable/basket" />
+                    android:src="@drawable/basket"/>
             </LinearLayout>
 
             <LinearLayout
@@ -145,7 +145,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="300dp">
+                android:layout_height="320dp">
 
                 <ProgressBar
                     android:id="@+id/progressBarBestGame"
@@ -160,7 +160,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerBestGame"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:clipToPadding="false"
                     android:paddingStart="8dp"
                     android:paddingEnd="8dp"

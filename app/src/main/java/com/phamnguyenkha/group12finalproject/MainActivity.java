@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -29,6 +30,8 @@ import com.phamnguyenkha.models.UserModel;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
@@ -42,11 +45,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         
         loadUser();
-        initBestFood();
+        initBestGame();
 
     }
 
-    private void initBestFood() {
+    private void initBestGame() {
         ArrayList<Product> list = new ArrayList<>();
         db.collection("product").whereEqualTo("BestGame", 1)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -58,19 +61,37 @@ public class MainActivity extends AppCompatActivity {
                             return;
                         }
                         for (DocumentChange dc : value.getDocumentChanges()) {
+                            int Id = ((Long) dc.getDocument().get("Id")).intValue();
+                            int ImagePath = getResources().getIdentifier((String) dc.getDocument().get("ImagePath"), "drawable", getPackageName());
+                            int CategoryId = ((Long) dc.getDocument().get("CategoryId")).intValue();
+                            String ProductName = (String) dc.getDocument().get("ProductName");
+                            int BestGame = ((Long) dc.getDocument().get("BestGame")).intValue();
+                            String Description = (String) dc.getDocument().get("Description");
+                            Object starObj = dc.getDocument().get("Star");
+                            int star;
 
-//                                int Id = ((Long) dc.getDocument().get("Id")).intValue();
-//                                int ImagePath = getResources().getIdentifier((String) dc.getDocument().get("ImagePath"), "drawable", getPackageName());
-//                                String CategoryName = (String) dc.getDocument().get("CategoryName");
-//                                categories.add(new Category(Id, CategoryName, ImagePath));
-                            list.add(dc.getDocument().toObject(Product.class));
+                            if (starObj instanceof Long) {
+                                star = ((Long) starObj).intValue();
+                            } else if (starObj instanceof Double) {
+                                star = ((Double) starObj).intValue();
+                            } else {
+                                // Handle other cases, such as null or unexpected types
+                                star = 0; // Set a default value or handle the case accordingly
+                            }
+                            double ProductPrice = ((Long) dc.getDocument().get("ProductPrice")).doubleValue();
+                            list.add(new Product(Id, ProductName, ProductPrice, BestGame, Description, ImagePath, CategoryId, star, 0));
+
                         }
                         if (list.size() > 0) {
                             binding.recyclerBestGame.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false));
-                            BestGameAdapter adapter = new BestGameAdapter(list);
+                            RecyclerView.Adapter adapter = new BestGameAdapter(list);
                             binding.recyclerBestGame.setAdapter(adapter);
+                            binding.progressBarBestGame.setVisibility(View.GONE);
                         }
-                        binding.recyclerBestGame.setVisibility(View.GONE);
+                        for (Product p : list) {
+                            Log.i("Product", p.toString());
+                        }
+
 
                     }
                 });
