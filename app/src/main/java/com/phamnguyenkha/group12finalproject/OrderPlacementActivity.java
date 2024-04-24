@@ -32,6 +32,16 @@ public class OrderPlacementActivity extends AppCompatActivity {
         userInfo();
         loadData();
         forward();
+        order();
+    }
+
+    private void order() {
+        binding.buttonConfirmOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     private void forward() {
@@ -39,6 +49,12 @@ public class OrderPlacementActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(OrderPlacementActivity.this,OrderConfirm.class));
+            }
+        });
+        binding.paymentMenthod.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(OrderPlacementActivity.this,PaymentMethod.class));
             }
         });
     }

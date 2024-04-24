@@ -29,7 +29,7 @@
                     android:background="@drawable/border_shadow_3">
 
                     <ImageView
-                        android:id="@+id/imageView3"
+                        android:id="@+id/back"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="18dp"
@@ -46,9 +46,9 @@
                         android:text="Giỏ hàng"
                         android:textSize="15sp"
                         android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-                        app:layout_constraintStart_toEndOf="@+id/imageView3"
-                        app:layout_constraintTop_toTopOf="@+id/imageView3" />
+                        app:layout_constraintBottom_toBottomOf="@+id/back"
+                        app:layout_constraintStart_toEndOf="@+id/back"
+                        app:layout_constraintTop_toTopOf="@+id/back" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
