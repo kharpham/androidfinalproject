@@ -64,4 +64,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.viewho
             catName = itemView.findViewById(R.id.catName);
         }
     }
+
+
 }

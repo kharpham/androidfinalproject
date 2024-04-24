@@ -34,4 +34,13 @@ public class Category {
     public void setImagePath(int imagePath) {
         ImagePath = imagePath;
     }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "Id=" + Id +
+                ", CategoryName='" + CategoryName + '\'' +
+                ", ImagePath=" + ImagePath +
+                '}';
+    }
 }

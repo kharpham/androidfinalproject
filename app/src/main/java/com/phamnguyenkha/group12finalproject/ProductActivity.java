@@ -71,7 +71,7 @@ public class ProductActivity extends AppCompatActivity {
                                 int Id = ((Long) dc.getDocument().get("Id")).intValue();
                                 int ImagePath = getResources().getIdentifier((String) dc.getDocument().get("ImagePath"), "drawable", getPackageName());
                                 String ProductName = (String) dc.getDocument().get("ProductName");
-                                double ProductPrice = ((Long) dc.getDocument().get("ProductPrice")).doubleValue();
+                                    double ProductPrice = ((Long) dc.getDocument().get("ProductPrice")).doubleValue();
 //                                int Star = ((Double) dc.getDocument().get("Star")).intValue();
                                 Object starObj = dc.getDocument().get("Star");
                                 int star;

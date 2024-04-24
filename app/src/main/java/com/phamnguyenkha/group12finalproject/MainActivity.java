@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private void initCategory() {
         ArrayList<Category> list = new ArrayList<>();
-        db.collection("product").whereEqualTo("BestGame", 1)
+        db.collection("category")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -78,11 +78,13 @@ public class MainActivity extends AppCompatActivity {
                             list.add(new Category(Id, CategoryName, ImagePath ));
                         }
                         if (list.size() > 0) {
-                            binding.recyclerBestGame.setLayoutManager(new GridLayoutManager(MainActivity.this, 3));
+                            binding.recyclerCategory.setLayoutManager(new GridLayoutManager(MainActivity.this, 3));
                             RecyclerView.Adapter adapter = new CategoryAdapter(list);
                             binding.recyclerCategory.setAdapter(adapter);
                             binding.progressBarCategory.setVisibility(View.GONE);
                         }
+                        for (Category c : list) {
+                            Log.i("Category", c.toString());}
                     }
                 });
     }
