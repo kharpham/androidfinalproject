@@ -71,10 +71,10 @@ public class CartActivity extends AppCompatActivity {
         double total = Math.round((managementCart.getTotalFee() + tax + delivery) * 100) /100;
         double itemTotal = Math.round(managementCart.getTotalFee() * 100) / 100;
 
-        binding.subtotal.setText(itemTotal+"VND");
-        binding.totalTax.setText(tax+"VND");
-        binding.delivery.setText(delivery+"VND");
-        binding.total.setText(total+"VND");
+        binding.subtotal.setText(String.format("%.0f VND", itemTotal));
+        binding.totalTax.setText(String.format("%.0f VND", tax));
+        binding.delivery.setText(String.format("%.0f VND", delivery));
+        binding.total.setText(String.format("%.0f VND", total));
 
 
     }
