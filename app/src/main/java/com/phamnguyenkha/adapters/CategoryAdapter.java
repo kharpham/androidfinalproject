@@ -1,7 +1,9 @@
 package com.phamnguyenkha.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -13,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.phamnguyenkha.group12finalproject.ListProductActivity;
 import com.phamnguyenkha.group12finalproject.R;
 import com.phamnguyenkha.models.Category;
 import com.phamnguyenkha.models.Product;
@@ -47,6 +50,16 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.viewho
                 .into(holder.catImage);
 
         holder.catImage.setBackgroundResource(context.getResources().getIdentifier("cat_" + position + "_background", "drawable", context.getPackageName()));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ListProductActivity.class);
+                intent.putExtra("isSearch", false);
+                intent.putExtra("categoryId", c.getId());
+                intent.putExtra("categoryName", c.getCategoryName());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

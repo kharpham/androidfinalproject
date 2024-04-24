@@ -17,6 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.phamnguyenkha.adapters.CategoryAdapter;
+import com.phamnguyenkha.adapters.ProductListAdapter;
 import com.phamnguyenkha.group12finalproject.databinding.ActivityListProductBinding;
 import com.phamnguyenkha.group12finalproject.databinding.ActivityProductBinding;
 import com.phamnguyenkha.models.Category;
@@ -27,7 +28,7 @@ import java.util.Collection;
 
 public class ListProductActivity extends AppCompatActivity {
     ActivityListProductBinding binding;
-    FirebaseFirestore db;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     int CategoryId;
     String CategoryName;
@@ -54,7 +55,9 @@ public class ListProductActivity extends AppCompatActivity {
             ref = db.collection("product").orderBy("ProductName").whereEqualTo("CategoryId", CategoryId);
         }
         else {
-            ref = db.collection("product").orderBy("ProductName").startAt(SearchText).endAt(SearchText + '\uf8ff');
+            ref = db.collection("product").orderBy("ProductName")
+                    .whereGreaterThanOrEqualTo("ProductName", SearchText)
+                    .whereLessThanOrEqualTo("ProductName", SearchText + "\uf8ff");
         }
         ref.addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -87,24 +90,25 @@ public class ListProductActivity extends AppCompatActivity {
                                 list.add(new Product(Id, ProductName, ProductPrice, BestGame, Description, ImagePath, CategoryId, star, 1));
                             }
                         }
-//                        if (list.size() > 0) {
-//                            binding.productListView.setLayoutManager(new GridLayoutManager(ListProductActivity.this, 3));
-//                            RecyclerView.Adapter adapter = new CategoryAdapter(list);
-//                            binding.productListView.setAdapter(adapter);
-//                            binding.progressBar.setVisibility(View.GONE);
-//                        }
+                        if (list.size() > 0) {
+                            Log.i("List has one or more items", "OK");
+                            binding.productListView.setLayoutManager(new GridLayoutManager(ListProductActivity.this, 2));
+                            RecyclerView.Adapter adapter = new ProductListAdapter(list);
+                            binding.productListView.setAdapter(adapter);
+                            binding.progressBar.setVisibility(View.GONE);
+                        }
                         Log.i("Finish running adapter", "OK");
                     }
                 });
     }
 
     private void getIntentExtra() {
-        categoryId = getIntent().getIntExtra("categoryId", 0);
-        categoryName = getIntent().getStringExtra("categoryName");
-        searchText = getIntent().getStringExtra("searchText");
+        CategoryId = getIntent().getIntExtra("categoryId", 0);
+        CategoryName = getIntent().getStringExtra("categoryName");
+        SearchText = getIntent().getStringExtra("searchText");
         isSearch = getIntent().getBooleanExtra("isSearch", false);
 
-        binding.textTitle.setText(categoryName);
+        binding.textTitle.setText(CategoryName);
         binding.btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
