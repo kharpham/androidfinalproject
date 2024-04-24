@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,6 +29,8 @@ public class OrderPlacementActivity extends AppCompatActivity {
     ArrayList<Product> products;
     ManagmentCart managementCart;
     ArrayList<Product> cartProducts;
+    TextView methodTextView;
+    private String paymentMethod;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,8 +40,29 @@ public class OrderPlacementActivity extends AppCompatActivity {
         loadData();
         forward();
         order();
+        paymentMethod();
         ManagmentCart managementCart = new ManagmentCart(this);
         ArrayList<Product> cartProducts = managementCart.getListCart();
+    }
+
+    private void paymentMethod() {
+        methodTextView = findViewById(R.id.method);
+        Intent intent = getIntent();
+        if (intent.getAction() != null && intent.getAction().equals("PAYMENT_METHOD")) {
+            String method = intent.getStringExtra("method");
+            if (method != null) {
+                if (method.equals("card")) {
+                    methodTextView.setText("Tài khoản ngân hàng liên kết");
+                    paymentMethod = "card";
+                } else if (method.equals("cash")) {
+                    methodTextView.setText("Thanh toán khi nhận hàng");
+                    paymentMethod = "cash";
+                }
+            }
+        } else {
+            methodTextView.setText("Thanh toán khi nhận hàng");
+            paymentMethod = "cash";
+        }
     }
 
     private void order() {
@@ -58,7 +82,7 @@ public class OrderPlacementActivity extends AppCompatActivity {
                         double totalPrice = calculateTotalPrice(cartProducts);
                         newOrder.setTotalPrice(totalPrice);
                         newOrder.setProducts(cartProducts);
-
+                        newOrder.setPaymentMethod(paymentMethod);
 
                         saveOrderToFirestore(newOrder);
 
@@ -96,7 +120,7 @@ public class OrderPlacementActivity extends AppCompatActivity {
                 startActivity(new Intent(OrderPlacementActivity.this,OrderConfirm.class));
             }
         });
-        binding.paymentMenthod.setOnClickListener(new View.OnClickListener() {
+        binding.paymentMethod.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(OrderPlacementActivity.this,PaymentMethod.class));

@@ -187,7 +187,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView31"
+            android:id="@+id/method"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -196,11 +196,11 @@
             android:textStyle="bold"
             android:textColor="@color/blue"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/paymentMenthod"
+            app:layout_constraintEnd_toStartOf="@+id/paymentMethod"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/paymentMenthod"
+            android:id="@+id/paymentMethod"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginEnd="8dp"

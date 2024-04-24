@@ -94,7 +94,7 @@
                 android:layout_height="match_parent">
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/button2"
+                    android:id="@+id/confirm"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginStart="16dp"

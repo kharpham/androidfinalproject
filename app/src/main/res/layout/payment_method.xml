@@ -130,11 +130,11 @@
                         android:layout_marginEnd="24dp"
                         android:src="@drawable/cash"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/radioButton"
+                        app:layout_constraintEnd_toStartOf="@+id/radioButtonCash"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <RadioButton
-                        android:id="@+id/radioButton"
+                        android:id="@+id/radioButtonCash"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
@@ -151,7 +151,7 @@
                 android:layout_height="match_parent">
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/button2"
+                    android:id="@+id/confirm"
                     android:layout_width="110dp"
                     android:layout_height="35dp"
                     android:layout_marginTop="27dp"
