@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="260dp"
-    android:layout_height="295dp"
+    android:layout_height="305dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="8dp"
     app:cardCornerRadius="15dp">
@@ -22,13 +22,16 @@
 
         <TextView
             android:id="@+id/textTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="title"
+            android:text="titleddfdsa;fdafkdsalk;fdal;kfl;kdaftitleddfdsa;fdafkdsalk;dfadfadsfadsf"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:layout_marginEnd="16dp"
             android:textColor="@color/dark_blue"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -52,7 +55,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/textStar"
             app:layout_constraintStart_toEndOf="@+id/textStar"
             app:layout_constraintTop_toTopOf="@+id/textStar"
-            tools:srcCompat="@drawable/star_icon" />
+            android:src="@drawable/star_icon" />
 
         <TextView
             android:id="@+id/textPlus"

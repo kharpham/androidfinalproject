@@ -40,7 +40,7 @@ public class BestGameAdapter extends RecyclerView.Adapter<BestGameAdapter.viewho
     public void onBindViewHolder(@NonNull BestGameAdapter.viewholder holder, int position) {
         Product p = products.get(position);
         holder.textTitle.setText(p.getProductName());
-        holder.textPrice.setText(String.valueOf(p.getProductPrice()));
+        holder.textPrice.setText(String.valueOf(p.getProductPrice())+"VND");
         holder.textStar.setText(String.valueOf(p.getStar()));
         Glide.with(context)
                     .load(p.getImagePath())
@@ -69,6 +69,7 @@ public class BestGameAdapter extends RecyclerView.Adapter<BestGameAdapter.viewho
             textStar = itemView.findViewById(R.id.textStar);
             textPrice = itemView.findViewById(R.id.textPrice);
             textPlus = itemView.findViewById(R.id.textPlus);
+            imageProduct = itemView.findViewById(R.id.imageProduct);
         }
     }
 }

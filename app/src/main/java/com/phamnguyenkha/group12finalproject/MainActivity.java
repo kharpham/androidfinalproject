@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                             binding.recyclerBestGame.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false));
                             RecyclerView.Adapter adapter = new BestGameAdapter(list);
                             binding.recyclerBestGame.setAdapter(adapter);
-                            binding.recyclerBestGame.setVisibility(View.GONE);
+                            binding.progressBarBestGame.setVisibility(View.GONE);
                         }
                         for (Product p : list) {
                             Log.i("Product", p.toString());
