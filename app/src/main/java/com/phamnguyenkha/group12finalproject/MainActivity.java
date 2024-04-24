@@ -46,8 +46,19 @@ public class MainActivity extends AppCompatActivity {
         
         loadUser();
         initBestGame();
-
+        addEvents();
     }
+
+    private void addEvents() {
+        binding.imageCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CartActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
 
     private void initBestGame() {
         ArrayList<Product> list = new ArrayList<>();
