@@ -7,6 +7,18 @@
     android:background="@color/white"
     tools:context=".DetailActivity">
 
+    <ImageView
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:tint="@color/blue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/arrow"
+        android:elevation="10dp" />
+
     <ScrollView
         android:id="@+id/scrollView3"
         android:layout_width="match_parent"
@@ -25,6 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+
                 <ImageView
                     android:id="@+id/productImage"
                     android:layout_width="match_parent"
@@ -33,6 +46,8 @@
                     android:src="@drawable/product44"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
@@ -158,13 +173,14 @@
 
                 <TextView
                     android:id="@+id/tvAdd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="11dp"
+                    android:layout_height="18dp"
                     android:layout_marginStart="16dp"
+                    android:background="@drawable/edittext_background"
                     android:text="+"
                     android:textColor="@color/blue"
-                    android:textStyle="bold"
                     android:textSize="18sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/tvQuantity"
                     app:layout_constraintTop_toTopOf="parent" />

@@ -87,7 +87,7 @@ public class ProductActivity extends AppCompatActivity {
                                 String Description = (String) dc.getDocument().get("Description");
                                 int CategoryId = ((Long) dc.getDocument().get("CategoryId")).intValue();
                                 int BestGame = ((Long) dc.getDocument().get("BestGame")).intValue();
-                                products.add(new Product(Id, ProductName, ProductPrice, BestGame, Description, ImagePath, CategoryId, star));
+                                products.add(new Product(Id, ProductName, ProductPrice, BestGame, Description, ImagePath, CategoryId, star, 1));
                             }
                         }
                         initAdapter();
