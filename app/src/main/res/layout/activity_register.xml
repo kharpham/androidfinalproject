@@ -117,7 +117,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:hint="      Nhập mật khẩu"
+            android:hint="Nhập mật khẩu"
             app:boxBackgroundColor="@color/white"
             app:boxBackgroundMode="outline"
             app:counterEnabled="true"
@@ -134,7 +134,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
