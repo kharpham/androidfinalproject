@@ -22,6 +22,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseUser;
 import com.phamnguyenkha.group12finalproject.databinding.ActivityLoginBinding;
 
 import java.util.regex.Pattern;
@@ -44,6 +45,9 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         firebaseAuth = FirebaseAuth.getInstance();
+
+        letUserInIfAlreadyLoggedIn();
+
         progressDialog = new ProgressDialog(this);
         sharedPreferences = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
 
@@ -124,6 +128,14 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(LoginActivity.this, ChatbotActivity.class));
             }
         });
+    }
+
+    private void letUserInIfAlreadyLoggedIn() {
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        if (currentUser != null) {
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+        }
     }
 
     private boolean validateEmail(String email) {

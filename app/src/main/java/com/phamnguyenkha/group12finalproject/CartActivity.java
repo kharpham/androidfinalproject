@@ -16,7 +16,7 @@ import com.phamnguyenkha.group12finalproject.databinding.ActivityMainBinding;
 import com.phamnguyenkha.helpers.ChangeNumberItemsListener;
 import com.phamnguyenkha.helpers.ManagmentCart;
 
-public class CartActivity extends AppCompatActivity {
+public class CartActivity extends AppCompatActivity implements CartAdapter.CartEmptyListener {
     ActivityCartBinding binding;
     RecyclerView.Adapter adapter;
     ManagmentCart managementCart;
@@ -72,7 +72,7 @@ public class CartActivity extends AppCompatActivity {
             public void change() {
                 calculateCart();
             }
-        });
+        }, this);
         binding.cardView.setAdapter(adapter);
     }
 
@@ -91,6 +91,15 @@ public class CartActivity extends AppCompatActivity {
 
 
     }
-
+    @Override
+    public void onCartEmptied(boolean isEmpty) {
+        if (isEmpty) {
+            binding.empty.setVisibility(View.VISIBLE);
+            binding.scrollViewCart.setVisibility(View.GONE);
+        } else {
+            binding.scrollViewCart.setVisibility(View.VISIBLE);
+            binding.empty.setVisibility(View.GONE);
+        }
+    }
 
 }

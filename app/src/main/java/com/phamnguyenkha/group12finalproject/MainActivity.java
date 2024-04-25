@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String text = binding.editSearch.getText().toString();
                 if (text.isEmpty()) {
-                    Toast.makeText(MainActivity.this, "Search text is required when filtering", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Khung tìm kiếm chưa được cung cấp", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     Intent intent = new Intent(MainActivity.this, ListProductActivity.class);

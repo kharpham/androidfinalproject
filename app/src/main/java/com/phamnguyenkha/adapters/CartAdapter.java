@@ -21,16 +21,27 @@ import com.phamnguyenkha.models.Product;
 import java.util.ArrayList;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.viewholder> {
+    public interface CartEmptyListener {
+        void onCartEmptied(boolean isEmpty);
+    }
+    private void checkCartEmpty() {
+        if (cartEmptyListener != null) {
+            boolean isEmpty = products.isEmpty();
+            cartEmptyListener.onCartEmptied(isEmpty);
+        }
+    }
+    CartEmptyListener cartEmptyListener;
     ArrayList<Product> products;
     ManagmentCart managementCart;
     ChangeNumberItemsListener changeNumberItemsListener;
 
-    public CartAdapter(ArrayList<Product> products, Context context, ChangeNumberItemsListener changeNumberItemsListener) {
+    public CartAdapter(ArrayList<Product> products, Context context, ChangeNumberItemsListener changeNumberItemsListener, CartEmptyListener cartEmptyListener) {
         this.products = products;
         managementCart = new ManagmentCart(context);
         this.changeNumberItemsListener = changeNumberItemsListener;
-
+        this.cartEmptyListener = cartEmptyListener;
     }
+
 
     @NonNull
     @Override
@@ -68,7 +79,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.viewholder> {
                 managementCart.minusNumberItem(products, position, new ChangeNumberItemsListener() {
                     @Override
                     public void change() {
-                        notifyDataSetChanged();
+                        notifyDataSetChangedWithListener();
                         changeNumberItemsListener.change();
                     }
                 });
@@ -95,6 +106,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.viewholder> {
             tvDecrement = itemView.findViewById(R.id.tvDecrement);
             tvQuantity = itemView.findViewById(R.id.tvQuantity);
             productImage = itemView.findViewById(R.id.productImage);
+        }
+    }
+    public void notifyDataSetChangedWithListener() {
+        super.notifyDataSetChanged();
+        boolean isEmpty = products.isEmpty();
+        if (cartEmptyListener != null) {
+            cartEmptyListener.onCartEmptied(isEmpty);
         }
     }
 }

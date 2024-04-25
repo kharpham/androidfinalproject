@@ -39,7 +39,7 @@ public class ListProductActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityListProductBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        binding.tvNoResult.setVisibility(View.GONE);
         getIntentExtra();
         initList();
 
@@ -50,12 +50,13 @@ public class ListProductActivity extends AppCompatActivity {
         ArrayList<Product> list = new ArrayList<>();
         binding.progressBar.setVisibility(View.VISIBLE);
 
+
         Query ref;
         if (!isSearch) {
-            ref = db.collection("product").orderBy("ProductName").whereEqualTo("CategoryId", CategoryId);
+            ref = db.collection("product").whereEqualTo("CategoryId", CategoryId);
         }
         else {
-            ref = db.collection("product").orderBy("ProductName")
+            ref = db.collection("product")
                     .whereGreaterThanOrEqualTo("ProductName", SearchText)
                     .whereLessThanOrEqualTo("ProductName", SearchText + "\uf8ff");
         }
@@ -96,6 +97,10 @@ public class ListProductActivity extends AppCompatActivity {
                             RecyclerView.Adapter adapter = new ProductListAdapter(list);
                             binding.productListView.setAdapter(adapter);
                             binding.progressBar.setVisibility(View.GONE);
+                        }
+                        else {
+                            binding.progressBar.setVisibility(View.GONE);
+                            binding.tvNoResult.setVisibility(View.VISIBLE);
                         }
                         Log.i("Finish running adapter", "OK");
                     }

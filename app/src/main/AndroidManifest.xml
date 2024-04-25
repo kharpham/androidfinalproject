@@ -67,6 +67,9 @@
             android:name=".DetailActivity"
             android:exported="false" />
         <activity
+            android:name=".ListProductActivity"
+            android:exported="false" />
+        <activity
             android:name=".AdminActivity"
             android:exported="false" />
         <activity

@@ -49,12 +49,6 @@ public class BestGameAdapter extends RecyclerView.Adapter<BestGameAdapter.viewho
                     .load(p.getImagePath())
                     .transform(new CenterCrop(), new RoundedCorners(30))
                     .into(holder.imageProduct);
-        holder.textPlus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +62,7 @@ public class BestGameAdapter extends RecyclerView.Adapter<BestGameAdapter.viewho
             @Override
             public void onClick(View v) {
                 ManagmentCart managementCart = new ManagmentCart(context);
+                p.setNumberInCart(1);
                 managementCart.insertProduct(p);
             }
         });
