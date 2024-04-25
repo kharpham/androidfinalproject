@@ -36,6 +36,7 @@ import com.phamnguyenkha.group12finalproject.FirebaseManager;
 import com.phamnguyenkha.group12finalproject.R;
 
 import com.phamnguyenkha.group12finalproject.databinding.FragmentProductsBinding;
+import com.phamnguyenkha.group12finalproject.utils;
 import com.phamnguyenkha.models.Category;
 import com.phamnguyenkha.models.Product;
 

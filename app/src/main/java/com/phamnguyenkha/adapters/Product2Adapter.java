@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.phamnguyenkha.group12finalproject.utils;
 import com.phamnguyenkha.models.Category;
 import com.phamnguyenkha.models.Product;
 import com.phamnguyenkha.group12finalproject.R;
@@ -68,7 +69,7 @@ public class Product2Adapter extends BaseAdapter {
         holder.productImage.setImageResource(product.getImagePath());
         holder.productName.setText(product.getProductName());
         holder.productStar.setText(String.valueOf(product.getStar()));
-        holder.productPrice.setText(String.valueOf(product.getProductPrice()));
+        holder.productPrice.setText(utils.decimalFormat.format(product.getProductPrice()) + " VND");
         holder.productId.setText(String.valueOf("#" + product.getId()));
 //        holder.productCategory.setText(String.valueOf(product.getCategoryId()));
 //        holder.productCategory.setText(String.valueOf(product.getCategoryName()));

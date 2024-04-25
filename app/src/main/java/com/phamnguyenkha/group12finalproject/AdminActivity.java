@@ -1,12 +1,16 @@
 package com.phamnguyenkha.group12finalproject;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -14,6 +18,7 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.phamnguyenkha.group12finalproject.databinding.ActivityAdminBinding;
 
 public class AdminActivity extends AppCompatActivity {
@@ -47,6 +52,18 @@ public class AdminActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_admin);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+        addEventsLogout();
+    }
+
+    private void addEventsLogout() {
+        binding.navView.getMenu().findItem(R.id.logOut).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(@NonNull MenuItem item) {
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(AdminActivity.this, LoginActivity.class));
+                return false;
+            }
+        });
     }
 
     @Override

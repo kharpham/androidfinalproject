@@ -133,8 +133,16 @@ public class LoginActivity extends AppCompatActivity {
     private void letUserInIfAlreadyLoggedIn() {
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         if (currentUser != null) {
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
+            if (currentUser.getEmail().equals("admingameon@gmail.com")) {
+                startActivity(new Intent(LoginActivity.this, AdminActivity.class));
+                finish();
+            }
+            else {
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+
         }
     }
 

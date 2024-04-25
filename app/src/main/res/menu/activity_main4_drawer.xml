@@ -16,5 +16,9 @@
             android:id="@+id/nav_statistics"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_statistics" />
+        <item
+            android:id="@+id/logOut"
+            android:icon="@drawable/arrow"
+            android:title="Log out" />
     </group>
 </menu>
