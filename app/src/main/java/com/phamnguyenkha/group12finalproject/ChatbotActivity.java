@@ -1,5 +1,6 @@
 package com.phamnguyenkha.group12finalproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -9,7 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.phamnguyenkha.group12finalproject.databinding.ActivityChatbotBinding;
 
 import java.util.ArrayList;
 
@@ -27,11 +30,12 @@ public class ChatbotActivity extends AppCompatActivity {
     private final String USER_KEY = "user";
     private ArrayList<ChatsModal> chatsModalArrayList;
     private ChatRVAdapter chatRVAdapter;
-
+    ActivityChatbotBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chatbot);
+        binding = ActivityChatbotBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         // Initialize RecyclerView, EditText, and FloatingActionButton
         chatsRV = findViewById(R.id.idRVChats);
@@ -57,6 +61,30 @@ public class ChatbotActivity extends AppCompatActivity {
                 userMsgEdt.setText("");
             }
         });
+        BottomNavigationView bottomNavigationView = binding.bottomNavigationView;
+        bottomNavigationView.setSelectedItemId(R.id.nav_chatbot); // Chọn mục "Chatbot" mặc định
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.nav_home) {
+                startActivity(new Intent(ChatbotActivity.this, MainActivity.class));
+                return true;
+            } else if (itemId == R.id.nav_chatbot) {
+                // startActivity(new Intent(ChatbotActivity.this, ChatbotActivity.class));
+                return true;
+            } else if (itemId == R.id.nav_cart) {
+                startActivity(new Intent(ChatbotActivity.this, CartActivity.class));
+                return true;
+            } else if (itemId == R.id.nav_notion) {
+                // startActivity(new Intent(AccountInformationActivity.this, CartActivity.class));
+                return true;
+            } else if (itemId == R.id.nav_info) {
+                startActivity(new Intent(ChatbotActivity.this, AccountInformationActivity.class));
+                return true;
+            }
+            return false;
+        });
+
     }
 
     private void getResponse(String message) {

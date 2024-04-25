@@ -20,7 +20,9 @@
         android:id="@+id/idRLMs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dp"
+        >
 
         <EditText
             android:id="@+id/idRLMsg"
@@ -47,5 +49,17 @@
             android:src="@drawable/baseline_send_24"
             />
     </RelativeLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/bottom_nav"
+        android:background="@color/white"
+        app:itemIconSize="30sp"
+        app:itemIconTint="@color/gray"
+        app:itemRippleColor="@color/blue">
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
 
 </RelativeLayout>
