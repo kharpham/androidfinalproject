@@ -2,12 +2,16 @@ package com.phamnguyenkha.group12finalproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -64,7 +68,33 @@ public class OrderPlacementActivity extends AppCompatActivity {
             paymentMethod = "cash";
         }
     }
+    private void showSuccessDialog() {
 
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.success);
+        dialog.setCancelable(false);
+
+        // Tìm ImageView trong layout
+        ImageView imageView = dialog.findViewById(R.id.imageView);
+
+        // Sử dụng Glide để tải và hiển thị hình ảnh động từ tệp GIF
+        Glide.with(this)
+                .asGif()
+                .load(R.drawable.successful)
+                .into(imageView);
+        dialog.show();
+
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dialog.dismiss();
+                Intent intent = new Intent(OrderPlacementActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }, 2500);
+    }
     private void order() {
         binding.buttonConfirmOrder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,7 +117,7 @@ public class OrderPlacementActivity extends AppCompatActivity {
                         saveOrderToFirestore(newOrder);
 
                         clearCart();
-                        Toast.makeText(OrderPlacementActivity.this, "Đơn hàng của bạn đã được đặt thành công!", Toast.LENGTH_SHORT).show();
+                        showSuccessDialog();
                     } else {
                         Toast.makeText(OrderPlacementActivity.this, "Giỏ hàng của bạn đang trống!", Toast.LENGTH_SHORT).show();
                     }
@@ -124,6 +154,12 @@ public class OrderPlacementActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(OrderPlacementActivity.this,PaymentMethod.class));
+            }
+        });
+        binding.back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(OrderPlacementActivity.this,CartActivity.class));
             }
         });
     }

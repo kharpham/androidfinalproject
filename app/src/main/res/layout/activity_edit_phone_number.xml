@@ -36,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
                 android:text="Chỉnh sửa số điện thoại"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/imageViewBack"
                 app:layout_constraintStart_toEndOf="@+id/imageViewBack"
@@ -47,6 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:text="Lưu"
+                android:textSize="18sp"
                 android:textColor="#E91E63"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -91,8 +93,8 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:background="@color/light_gray"
-            android:text="Điều kiện của thông tin"
-            android:textSize="12sp"
+            android:text="Nhập số điện thoại khi nhận hàng"
+            android:textSize="15sp"
             android:textStyle="italic"
             tools:ignore="HardcodedText,InefficientWeight,SmallSp" />
     </LinearLayout>
