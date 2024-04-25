@@ -82,6 +82,20 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        binding.imageSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AccountInformationActivity.class);
+                startActivity(intent);
+            }
+        });
+        binding.chatBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ChatbotActivity.class);
+                startActivity(intent);
+            }
+        });
     }
     private void initCategory() {
         ArrayList<Category> list = new ArrayList<>();

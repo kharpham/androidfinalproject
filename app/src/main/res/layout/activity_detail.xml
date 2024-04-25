@@ -119,11 +119,11 @@
             <TextView
                 android:id="@+id/productDescription"
                 android:layout_width="match_parent"
-                android:justificationMode="inter_word"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
+                android:justificationMode="inter_word"
                 android:text='"Bộ bài Ma Sói"là một trò chơi giải đố tập thể phổ biến, trong đó người chơi tham gia vào một trò chơi vai trò, trong đó một nhóm người chơi bí mật giả là dân làng bình thường, trong khi một số người chơi khác giả là ma sói, và mục tiêu của họ là loại bỏ tất cả các dân làng. Bộ bài Ma Sói thường bao gồm các thẻ hoặc nhãn để xác định vai trò của từng người chơi trong trò chơi, bao gồm ma sói, bác sĩ, tiên tri, và dân làng. Trò chơi thường diễn ra qua các vòng đêm, khi mà ma sói thực hiện các vụ án giết người và các vai trò khác cố gắng để phát hiện và loại bỏ ma sói'
                 android:textColor="@color/dark_blue"
                 android:textSize="16sp" />
