@@ -1,12 +1,30 @@
 package com.phamnguyenkha.group12finalproject;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import com.phamnguyenkha.adapters.MyOrderAdapter;
+import com.phamnguyenkha.models.Order;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,7 +41,8 @@ public class MyOrdersFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    private List<Order> orderList;
+    private MyOrderAdapter myOrderAdapter;
     public MyOrdersFragment() {
         // Required empty public constructor
     }
@@ -59,6 +78,39 @@ public class MyOrdersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_orders, container, false);
+        View view = inflater.inflate(R.layout.fragment_my_orders, container, false);
+        orderList = new ArrayList<>();
+        ListView lvMyOrder = view.findViewById(R.id.lvMyOrder);
+        myOrderAdapter = new MyOrderAdapter(getContext(), orderList);
+        lvMyOrder.setAdapter(myOrderAdapter);
+        loadDataFromFirebase();
+        return view;
     }
+
+    private void loadDataFromFirebase() {
+        CollectionReference ordersRef = FirebaseFirestore.getInstance().collection("orders");
+
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        ordersRef.whereEqualTo("userId", userId)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    // Xóa dữ liệu cũ trước khi thêm mới
+                    orderList.clear();
+                    for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                        Order order = documentSnapshot.toObject(Order.class);
+                        orderList.add(order);
+                    }
+                    if (orderList.isEmpty()) {
+                        Toast.makeText(getContext(), "Không có đơn hàng nào.", Toast.LENGTH_SHORT).show();
+                    }
+                    // Cập nhật adapter sau khi đã cập nhật dữ liệu
+                    myOrderAdapter.notifyDataSetChanged();
+                })
+                .addOnFailureListener(e -> {
+                     Log.e(TAG, "loadDataFromFirebase: ", e);
+                });
+    }
+
+
 }

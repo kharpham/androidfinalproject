@@ -36,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
                 android:text="Chỉnh sửa ngày sinh"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/imageViewBack"
                 app:layout_constraintStart_toEndOf="@+id/imageViewBack"
@@ -47,6 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:text="Lưu"
+                android:textSize="18sp"
                 android:textColor="#E91E63"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -84,7 +86,6 @@
             android:id="@+id/btnDatePicker"
             android:layout_width="40dp"
             android:layout_height="40dp"
-
             android:layout_marginEnd="8dp"
             android:background="@drawable/baseline_calendar_month_24" />
     </LinearLayout>
