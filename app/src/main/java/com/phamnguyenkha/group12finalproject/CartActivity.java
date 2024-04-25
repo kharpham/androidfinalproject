@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.phamnguyenkha.adapters.CartAdapter;
 import com.phamnguyenkha.group12finalproject.databinding.ActivityCartBinding;
 import com.phamnguyenkha.group12finalproject.databinding.ActivityMainBinding;
@@ -41,6 +42,29 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.CartE
         calculateCart();
         initList();
         addEvents();
+        BottomNavigationView bottomNavigationView = binding.bottomNavigationView;
+        bottomNavigationView.setSelectedItemId(R.id.nav_cart); // Chọn mục "Giỏ hàng" mặc định
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.nav_home) {
+                startActivity(new Intent(CartActivity.this, MainActivity.class));
+                return true;
+            } else if (itemId == R.id.nav_chatbot) {
+                startActivity(new Intent(CartActivity.this, ChatbotActivity.class));
+                return true;
+            } else if (itemId == R.id.nav_cart) {
+                // startActivity(new Intent(CartActivity.this, CartActivity.class));
+                return true;
+            } else if (itemId == R.id.nav_notion) {
+                // startActivity(new Intent(CartActivity.this, CartActivity.class));
+                return true;
+            } else if (itemId == R.id.nav_info) {
+                startActivity(new Intent(CartActivity.this, AccountInformationActivity.class));
+                return true;
+            }
+            return false;
+        });
 
 
 

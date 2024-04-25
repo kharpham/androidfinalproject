@@ -22,6 +22,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -54,7 +55,28 @@ public class PersonalInformationActivity extends AppCompatActivity {
         addevent();
         resultLauncher();
         forwardInfo();
-
+        BottomNavigationView bottomNavigationView = binding.bottomNavigationView;
+        bottomNavigationView.setSelectedItemId(R.id.nav_info); // Sử dụng phương thức này để chọn mục mặc định
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.nav_home) {
+                startActivity(new Intent(PersonalInformationActivity.this, MainActivity.class));
+                return true;
+            } else if (itemId == R.id.nav_chatbot) {
+                startActivity(new Intent(PersonalInformationActivity.this, ChatbotActivity.class));
+                return true;
+            } else if (itemId == R.id.nav_cart) {
+                startActivity(new Intent(PersonalInformationActivity.this, CartActivity.class));
+                return true;
+            } else if (itemId == R.id.nav_notion) {
+                // startActivity(new Intent(PersonalInformationActivity.this, CartActivity.class));
+                return true;
+            } else if (itemId == R.id.nav_info) {
+                 startActivity(new Intent(PersonalInformationActivity.this, AccountInformationActivity.class));
+                return true;
+            }
+            return false;
+        });
     }
 
     private void forwardInfo() {

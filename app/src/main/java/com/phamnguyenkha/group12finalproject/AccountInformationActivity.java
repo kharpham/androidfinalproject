@@ -3,6 +3,7 @@ package com.phamnguyenkha.group12finalproject;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -15,6 +16,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -34,6 +36,30 @@ public class AccountInformationActivity extends AppCompatActivity {
         binding =AccountInformationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         forwardInfo();
+
+        BottomNavigationView bottomNavigationView = binding.bottomNavigationView;
+        bottomNavigationView.setSelectedItemId(R.id.nav_info); // Sử dụng phương thức này để chọn mục mặc định
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.nav_home) {
+                startActivity(new Intent(AccountInformationActivity.this, MainActivity.class));
+                return true;
+            } else if (itemId == R.id.nav_chatbot) {
+                startActivity(new Intent(AccountInformationActivity.this, ChatbotActivity.class));
+                return true;
+            } else if (itemId == R.id.nav_cart) {
+                startActivity(new Intent(AccountInformationActivity.this, CartActivity.class));
+                return true;
+            } else if (itemId == R.id.nav_notion) {
+                // startActivity(new Intent(AccountInformationActivity.this, CartActivity.class));
+                return true;
+            } else if (itemId == R.id.nav_info) {
+                // startActivity(new Intent(AccountInformationActivity.this, AccountInformationActivity.class));
+                return true;
+            }
+            return false;
+        });
+
     }
     protected void onStart() {
         super.onStart();
