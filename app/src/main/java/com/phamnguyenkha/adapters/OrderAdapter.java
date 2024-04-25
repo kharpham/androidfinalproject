@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.phamnguyenkha.group12finalproject.R;
+import com.phamnguyenkha.group12finalproject.utils;
 import com.phamnguyenkha.models.Product;
 
 import java.util.ArrayList;
@@ -55,7 +56,7 @@ public class OrderAdapter extends BaseAdapter {
         Product product = (Product) getItem(position);
         holder.productImage.setImageResource(product.getImagePath());
         holder.productName.setText(product.getProductName());
-        holder.productPrice.setText(product.getProductPrice() + " VND");
+        holder.productPrice.setText(utils.decimalFormat.format(product.getProductPrice()) + " VND");
         holder.quantity.setText("x" + product.getNumberInCart());
 
         return convertView;

@@ -18,6 +18,7 @@ import com.phamnguyenkha.helpers.ChangeNumberItemsListener;
 import com.phamnguyenkha.helpers.ManagmentCart;
 import com.phamnguyenkha.models.Product;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.viewholder> {
@@ -54,8 +55,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.viewholder> {
     public void onBindViewHolder(@NonNull CartAdapter.viewholder holder, int position) {
         Product p = products.get(position);
         holder.productName.setText(p.getProductName());
-        holder.productPrice.setText(String.format("%.0f VND", p.getProductPrice()));
-        holder.totalProductPrice.setText(String.format("%.0f VND", p.getNumberInCart() * p.getProductPrice()));
+        DecimalFormat df = new DecimalFormat("#,###");
+        holder.productPrice.setText(df.format(p.getProductPrice()) + " VND");
+        holder.totalProductPrice.setText(df.format(p.getNumberInCart() * p.getProductPrice()) + " VND");
         holder.tvQuantity.setText(String.valueOf(p.getNumberInCart()));
         Glide.with(holder.itemView.getContext())
                 .load(p.getImagePath())

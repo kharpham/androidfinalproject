@@ -16,6 +16,8 @@ import com.phamnguyenkha.group12finalproject.databinding.ActivityMainBinding;
 import com.phamnguyenkha.helpers.ChangeNumberItemsListener;
 import com.phamnguyenkha.helpers.ManagmentCart;
 
+import java.text.DecimalFormat;
+
 public class CartActivity extends AppCompatActivity implements CartAdapter.CartEmptyListener {
     ActivityCartBinding binding;
     RecyclerView.Adapter adapter;
@@ -80,14 +82,16 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.CartE
         double percentTax = 0.02;
         double delivery = 10000;
 
+
         tax = Math.round(managementCart.getTotalFee() * percentTax * 100.0) / 100;
         double total = Math.round((managementCart.getTotalFee() + tax + delivery) * 100) /100;
         double itemTotal = Math.round(managementCart.getTotalFee() * 100) / 100;
 
-        binding.subtotal.setText(String.format("%.0f VND", itemTotal));
-        binding.totalTax.setText(String.format("%.0f VND", tax));
-        binding.delivery.setText(String.format("%.0f VND", delivery));
-        binding.total.setText(String.format("%.0f VND", total));
+        DecimalFormat df = new DecimalFormat("#,###");
+        binding.subtotal.setText(df.format(itemTotal) + " VND");
+        binding.totalTax.setText(df.format(tax) + " VND");
+        binding.delivery.setText(df.format(delivery) + " VND");
+        binding.total.setText(df.format(total) + " VND");
 
 
     }

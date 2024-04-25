@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
+import com.phamnguyenkha.adapters.ProductListAdapter;
 import com.phamnguyenkha.group12finalproject.databinding.ActivityDetailBinding;
 import com.phamnguyenkha.helpers.ManagmentCart;
 import com.phamnguyenkha.models.Product;
@@ -37,10 +38,10 @@ public class DetailActivity extends AppCompatActivity {
         binding.productImage.setImageResource(p.getImagePath());
         Glide.with(DetailActivity.this).load(p.getImagePath()).into(binding.productImage);
         binding.productName.setText(p.getProductName());
-        binding.productPrice.setText(String.format("%.0f VND", p.getProductPrice()));
+        binding.productPrice.setText(ProductListAdapter.df.format(p.getProductPrice()) + " VND");
         binding.productDescription.setText(p.getDescription());
         binding.ratingBar.setRating(p.getStar());
-        binding.tvTotal.setText(quantity * p.getProductPrice() + "VND");
+        binding.tvTotal.setText(ProductListAdapter.df.format((quantity * p.getProductPrice())) + " VND");
         binding.tvQuantity.setText(String.valueOf(quantity));
 
         binding.btnBack.setOnClickListener(new View.OnClickListener() {
@@ -54,7 +55,7 @@ public class DetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 quantity++;
                 binding.tvQuantity.setText(String.valueOf(quantity));
-                binding.tvTotal.setText(quantity * p.getProductPrice() + "VND");
+                binding.tvTotal.setText(ProductListAdapter.df.format((quantity * p.getProductPrice())) + " VND");
             }
         });
         binding.tvDecrement.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +64,8 @@ public class DetailActivity extends AppCompatActivity {
                 if (quantity > 1) {
                     quantity--;
                     binding.tvQuantity.setText(String.valueOf(quantity));
-                    binding.tvTotal.setText(quantity * p.getProductPrice() + "VND");
+                    binding.tvTotal.setText(ProductListAdapter.df.format((quantity * p.getProductPrice())) + " VND");
+
                 }
 
             }

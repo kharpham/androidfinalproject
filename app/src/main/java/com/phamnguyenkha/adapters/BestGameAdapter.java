@@ -16,6 +16,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.phamnguyenkha.group12finalproject.DetailActivity;
 import com.phamnguyenkha.group12finalproject.R;
+import com.phamnguyenkha.group12finalproject.utils;
 import com.phamnguyenkha.helpers.ManagmentCart;
 import com.phamnguyenkha.models.Product;
 
@@ -43,7 +44,7 @@ public class BestGameAdapter extends RecyclerView.Adapter<BestGameAdapter.viewho
     public void onBindViewHolder(@NonNull BestGameAdapter.viewholder holder, int position) {
         Product p = products.get(position);
         holder.textTitle.setText(p.getProductName());
-        holder.textPrice.setText(String.format("%.0f VND",p.getProductPrice()));
+        holder.textPrice.setText(utils.decimalFormat.format(p.getProductPrice()) + " VND");
         holder.textStar.setText(String.valueOf(p.getStar()));
         Glide.with(context)
                     .load(p.getImagePath())

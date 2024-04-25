@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.phamnguyenkha.group12finalproject.databinding.AccountSettingBinding;
 
 public class AccountSettingActivity extends AppCompatActivity {
@@ -26,5 +27,12 @@ public class AccountSettingActivity extends AppCompatActivity {
             }
         });
 
+        binding.logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(AccountSettingActivity.this, LoginActivity.class));
+            }
+        });
     }
 }

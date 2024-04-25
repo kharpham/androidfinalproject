@@ -173,7 +173,7 @@ public class OrderPlacementActivity extends AppCompatActivity {
         binding.listView.setAdapter(orderAdapter);
 
         int totalPrice = calculateTotalPrice(cartProducts);
-        binding.totalPrice.setText(String.valueOf(totalPrice));
+        binding.totalPrice.setText(utils.decimalFormat.format(totalPrice) + " VND");
     }
 
     private int calculateTotalPrice(ArrayList<Product> cartProducts) {
@@ -181,7 +181,7 @@ public class OrderPlacementActivity extends AppCompatActivity {
         for (Product product : cartProducts) {
             totalPrice += (product.getNumberInCart() * product.getProductPrice());
         }
-        return totalPrice;
+        return (int) (totalPrice * 1.02 + 10000);
     }
 
     private void userInfo() {

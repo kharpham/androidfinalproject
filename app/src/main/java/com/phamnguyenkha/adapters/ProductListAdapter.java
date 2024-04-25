@@ -19,11 +19,13 @@ import com.phamnguyenkha.group12finalproject.R;
 import com.phamnguyenkha.helpers.ManagmentCart;
 import com.phamnguyenkha.models.Product;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.viewholder> {
     ArrayList<Product> products;
     Context context;
+    public static final DecimalFormat df = new DecimalFormat("#,###");
 
     public ProductListAdapter(ArrayList<Product> products) {
         this.products = products;
@@ -42,9 +44,10 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     public void onBindViewHolder(@NonNull ProductListAdapter.viewholder holder, int position) {
         Product p = products.get(position);
 
+
         holder.productName.setText(p.getProductName());
         holder.productStar.setText(String.valueOf(p.getStar()));
-        holder.productPrice.setText(String.format("%.0f VND", p.getProductPrice()));
+        holder.productPrice.setText(df.format(p.getProductPrice()) + " VND");
         Glide.with(context)
                 .load(p.getImagePath())
                 .transform(new CenterCrop(), new RoundedCorners(30))
