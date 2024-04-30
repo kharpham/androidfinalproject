@@ -114,19 +114,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/editCategory" />
 
-    <!--    <EditText-->
-    <!--        android:id="@+id/editCategory"-->
-    <!--        android:layout_width="0dp"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginEnd="16dp"-->
-    <!--        android:gravity="start|top"-->
-    <!--        android:inputType="text"-->
-    <!--        android:text=""-->
-    <!--        android:textSize="13sp"-->
-    <!--        android:textStyle="bold"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="@+id/editTextPrice"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/editTextPrice" />-->
     <Spinner
         android:id="@+id/editCategory"
         android:layout_width="0dp"
@@ -161,4 +148,47 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/editCategory"
         app:layout_constraintTop_toBottomOf="@+id/editCategory" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="Star"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/editStar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/editStar" />
+
+    <Spinner
+        android:id="@+id/editStar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/editTextDescription"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDescription" />
+
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="BestGame"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/editBestGame"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/editBestGame" />
+
+    <Spinner
+        android:id="@+id/editBestGame"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/editStar"
+        app:layout_constraintTop_toBottomOf="@+id/editStar" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
