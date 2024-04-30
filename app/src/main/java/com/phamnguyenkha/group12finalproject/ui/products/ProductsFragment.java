@@ -1,8 +1,14 @@
 package com.phamnguyenkha.group12finalproject.ui.products;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -25,7 +31,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -40,6 +49,7 @@ import com.phamnguyenkha.group12finalproject.utils;
 import com.phamnguyenkha.models.Category;
 import com.phamnguyenkha.models.Product;
 
+import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,13 +57,17 @@ import java.util.Locale;
 
 public class ProductsFragment extends Fragment {
 
-    private FragmentProductsBinding binding;
+    FragmentProductsBinding binding;
     private ListView listView;
     private Product2Adapter productAdapter;
     private FirebaseManager firebaseManager;
     private List<Category> categoryList;
     private List<Category> CategoryList;
     private List<Product> ProductList;
+    ActivityResultLauncher<Intent> activityResultLauncher;
+
+
+    private Bitmap selectedImageBitmap;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -67,10 +81,17 @@ public class ProductsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 showDialogToAddProduct();
-
-
             }
         });
+//        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+//                result -> {
+//                    if (result.getResultCode() == Activity.RESULT_OK) {
+//                        // Thực hiện các hành động sau khi nhận được kết quả
+//                        if (result.getData() != null) {
+//                            handleImageResult(result.getData());
+//                        }
+//                    }
+//                });
         final TextView textView = binding.textHome;
         productViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
@@ -168,14 +189,80 @@ public class ProductsFragment extends Fragment {
             window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
             window.setGravity(Gravity.BOTTOM);
         }
-
+        ImageView editProductImage = dialog.findViewById(R.id.editProductImage);
+        ImageView imageProduct = dialog.findViewById(R.id.imageProduct);
         EditText productNameEditText = dialog.findViewById(R.id.textViewName);
         EditText productPriceEditText = dialog.findViewById(R.id.editTextPrice);
         EditText descriptionEditText = dialog.findViewById(R.id.editTextDescription);
         Spinner categorySpinner = dialog.findViewById(R.id.editCategory);
+        Spinner starSpinner = dialog.findViewById(R.id.editStar);
+        Spinner bestGameSpinner = dialog.findViewById((R.id.editBestGame));
+        // Thiết lập sự kiện chọn ảnh
+        editProductImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showOptionsDialog();
+            }
+        });
+        // Thiết lập Spinner Category
+        List<String> categoryNameList = new ArrayList<>();
+        for (Category category : CategoryList) {
+            categoryNameList.add(category.getCategoryName());
+        }
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, categoryNameList);
+        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categorySpinner.setAdapter(categoryAdapter);
 
+        // Thiết lập Spinner Star
+        ArrayAdapter<String> starAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, new String[]{"1", "2", "3", "4", "5"});
+        starAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        starSpinner.setAdapter(starAdapter);
+
+        // Thiết lập Spinner Best Game
+        ArrayAdapter<String> bestGameAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, new String[]{"Yes", "No"});
+        bestGameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        bestGameSpinner.setAdapter(bestGameAdapter);
         dialog.show();
     }
+
+    private void showOptionsDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+        builder.setTitle("Chọn ảnh từ");
+        // Thêm các tùy chọn vào danh sách
+        String[] options = {"Camera", "Thư viện ảnh"};
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case 0:
+                        // Chọn chụp ảnh từ camera
+                        dispatchTakePictureIntent();
+                        break;
+                    case 1:
+                        // Chọn ảnh từ thư viện ảnh
+                        dispatchChooseFromGalleryIntent();
+                        break;
+                }
+            }
+        });
+        builder.show();
+    }
+    private void dispatchTakePictureIntent() {
+        // Tạo Intent để chụp ảnh từ camera
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Gọi startActivityForResult để chụp ảnh từ camera và chờ kết quả trả về
+        activityResultLauncher.launch(takePictureIntent);
+
+    }
+
+    private void dispatchChooseFromGalleryIntent() {
+        // Tạo Intent để chọn ảnh từ thư viện ảnh
+//        Intent pickPhotoIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent pickPhotoIntent = new Intent(MediaStore.ACTION_PICK_IMAGES);
+        // Gọi startActivityForResult để chọn ảnh từ thư viện và chờ kết quả trả về
+        activityResultLauncher.launch(pickPhotoIntent);
+    }
+
 
 
 
@@ -239,7 +326,7 @@ public class ProductsFragment extends Fragment {
                     }
                     return true;
                 } else if (id == R.id.option2) {
-                    Toast.makeText(getContext(), "Option 2 selected", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), "Option 2 selected", Toast.LENGTH_SHORT).show();
                     return true;
                 }
                 return false;
