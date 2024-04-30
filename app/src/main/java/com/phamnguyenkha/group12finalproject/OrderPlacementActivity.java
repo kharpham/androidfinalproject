@@ -50,7 +50,8 @@ public class OrderPlacementActivity extends AppCompatActivity {
     }
 
     private void paymentMethod() {
-        methodTextView = findViewById(R.id.method);
+//        methodTextView = findViewById(R.id.method);
+        methodTextView = binding.method;
         Intent intent = getIntent();
         if (intent.getAction() != null && intent.getAction().equals("PAYMENT_METHOD")) {
             String method = intent.getStringExtra("method");

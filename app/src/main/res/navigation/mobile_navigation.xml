@@ -16,6 +16,11 @@
         android:name="com.phamnguyenkha.group12finalproject.ui.revenue.RevenueFragment"
         android:label="@string/menu_revenue"
         tools:layout="@layout/fragment_revenue" />
+    <fragment
+        android:id="@+id/nav_order"
+        android:name="com.phamnguyenkha.group12finalproject.ui.orders.OrdersFragment"
+        android:label="@string/menu_orders"
+        tools:layout="@layout/fragment_orders" />
 
     <fragment
         android:id="@+id/nav_statistics"

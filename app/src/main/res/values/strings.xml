@@ -13,4 +13,5 @@
     <string name="menu_products">Products</string>
     <string name="menu_revenue">Revenue</string>
     <string name="menu_statistics">Statistics</string>
+    <string name="menu_orders">Orders</string>
 </resources>
