@@ -55,7 +55,7 @@ public class Register extends AppCompatActivity {
                 String address = "Chứa cung cấp địa chỉ";
                 String avatarUrl = "";
                 Date dob = null;
-                int gender = 0;
+                int gender = 2;
                 String confirmation = binding.signup.getText().toString().trim();
                 if (name.length() == 0 || number.length() == 0 || email.length() == 0 || password.length() == 0 || confirmation.length() == 0) {
                     Toast.makeText(Register.this, "Thông tin đăng ký không đầy đủ", Toast.LENGTH_SHORT).show();

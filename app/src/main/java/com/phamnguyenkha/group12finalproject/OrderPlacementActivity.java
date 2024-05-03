@@ -75,7 +75,6 @@ public class OrderPlacementActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.success);
         dialog.setCancelable(false);
 
-        // Tìm ImageView trong layout
         ImageView imageView = dialog.findViewById(R.id.imageView);
 
         // Sử dụng Glide để tải và hiển thị hình ảnh động từ tệp GIF

@@ -26,6 +26,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.phamnguyenkha.adapters.BestGameAdapter;
 import com.phamnguyenkha.adapters.CategoryAdapter;
 import com.phamnguyenkha.group12finalproject.databinding.ActivityMainBinding;
+import com.phamnguyenkha.helpers.ManagmentCart;
 import com.phamnguyenkha.models.Category;
 import com.phamnguyenkha.models.Product;
 import com.phamnguyenkha.models.UserModel;
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
+                clearCart();
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
             }
         });
@@ -97,6 +99,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void clearCart() {
+        ManagmentCart managementCart = new ManagmentCart(MainActivity.this);
+        managementCart.clearCart();
+    }
+
     private void initCategory() {
         ArrayList<Category> list = new ArrayList<>();
         db.collection("category")

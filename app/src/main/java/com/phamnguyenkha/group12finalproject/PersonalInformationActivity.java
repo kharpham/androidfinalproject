@@ -199,8 +199,11 @@ public class PersonalInformationActivity extends AppCompatActivity {
     private String convertGenderToString(int gender) {
         if (gender == 0) {
             return "Nam";
-        } else {
+        } else if(gender ==1) {
             return "Nữ";
+        }
+        else {
+            return "Chưa cung cấp thông tin";
         }
     }
 

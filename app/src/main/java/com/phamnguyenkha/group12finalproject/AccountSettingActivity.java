@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.phamnguyenkha.group12finalproject.databinding.AccountSettingBinding;
+import com.phamnguyenkha.helpers.ManagmentCart;
 
 public class AccountSettingActivity extends AppCompatActivity {
     AccountSettingBinding binding;
@@ -31,8 +32,14 @@ public class AccountSettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
+                clearCart();
                 startActivity(new Intent(AccountSettingActivity.this, LoginActivity.class));
             }
         });
+    }
+
+    private void clearCart() {
+        ManagmentCart managementCart = new ManagmentCart(AccountSettingActivity.this);
+        managementCart.clearCart();
     }
 }

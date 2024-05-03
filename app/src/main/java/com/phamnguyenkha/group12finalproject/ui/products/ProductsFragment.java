@@ -1,15 +1,14 @@
 package com.phamnguyenkha.group12finalproject.ui.products;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -39,17 +38,20 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.phamnguyenkha.adapters.Product2Adapter;
-import com.phamnguyenkha.group12finalproject.AccountInformationActivity;
 import com.phamnguyenkha.group12finalproject.FirebaseManager;
 import com.phamnguyenkha.group12finalproject.R;
 
 import com.phamnguyenkha.group12finalproject.databinding.FragmentProductsBinding;
-import com.phamnguyenkha.group12finalproject.utils;
 import com.phamnguyenkha.models.Category;
 import com.phamnguyenkha.models.Product;
+import com.phamnguyenkha.models.Product2;
 
-import java.io.IOException;
+import java.io.ByteArrayOutputStream;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +67,8 @@ public class ProductsFragment extends Fragment {
     private List<Category> CategoryList;
     private List<Product> ProductList;
     ActivityResultLauncher<Intent> activityResultLauncher;
+    private Dialog addProductDialog;
+
 
 
     private Bitmap selectedImageBitmap;
@@ -83,15 +87,15 @@ public class ProductsFragment extends Fragment {
                 showDialogToAddProduct();
             }
         });
-//        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-//                result -> {
-//                    if (result.getResultCode() == Activity.RESULT_OK) {
-//                        // Thực hiện các hành động sau khi nhận được kết quả
-//                        if (result.getData() != null) {
-//                            handleImageResult(result.getData());
-//                        }
-//                    }
-//                });
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        // Thực hiện các hành động sau khi nhận được kết quả
+                        if (result.getData() != null) {
+                            handleImageResult(result.getData());
+                        }
+                    }
+                });
         final TextView textView = binding.textHome;
         productViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
@@ -181,8 +185,24 @@ public class ProductsFragment extends Fragment {
 
     }
 
+    private void handleImageResult(Intent data) {
+        Bundle extras = data.getExtras();
+        if (extras != null) {
+            Bitmap photo = (Bitmap) extras.get("data");
+            if (addProductDialog != null) {
+                // Tìm ImageView trong dialog để gắn hình ảnh
+                ImageView imageProductDialog = addProductDialog.findViewById(R.id.imageProduct);
+                if (imageProductDialog != null) {
+                    imageProductDialog.setImageBitmap(photo);
+                }
+            }
+        }
+    }
+
+
     private void showDialogToAddProduct() {
         Dialog dialog = new Dialog(requireContext());
+        addProductDialog =dialog;
         dialog.setContentView(R.layout.dialog_add_product);
         Window window = dialog.getWindow();
         if (window != null) {
@@ -222,24 +242,116 @@ public class ProductsFragment extends Fragment {
         ArrayAdapter<String> bestGameAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, new String[]{"Yes", "No"});
         bestGameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         bestGameSpinner.setAdapter(bestGameAdapter);
-        dialog.show();
+
+        Button addButton = addProductDialog.findViewById(R.id.addProduct);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Drawable drawable = imageProduct.getDrawable();
+                if (drawable != null && drawable instanceof BitmapDrawable) {
+                    Bitmap image = ((BitmapDrawable) drawable).getBitmap();
+                    String productName = productNameEditText.getText().toString();
+                    String productPrice = productPriceEditText.getText().toString().trim(); // Sửa tên biến này thành lowercase
+                    String description = descriptionEditText.getText().toString().trim();
+                    String Star = starSpinner.getSelectedItem().toString();
+                    String category = categorySpinner.getSelectedItem().toString();
+                    String bestGame = bestGameSpinner.getSelectedItem().toString();
+
+                    // Kiểm tra dữ liệu nhập vào trước khi add
+                    if (validateInput(image, productName, productPrice, description, Star, category, bestGame)) {
+                        Product2 newProduct = new Product2();
+                        newProduct.setProductNamexx(productName);
+                        newProduct.setProductPrice(Double.parseDouble(productPrice));
+                        newProduct.setDescription(description);
+                        newProduct.setStar(Integer.parseInt(Star));
+                        newProduct.setBestGame(bestGame.equalsIgnoreCase("Yes") ? 1 : 0); // Chuyển đổi từ Yes/No sang 1/0
+
+                        addProductToFirebase(newProduct,image);
+
+//                        Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(requireContext(), "Please enter complete information", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(requireContext(), "Please select an image", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        addProductDialog.show();
     }
+    private void addProductToFirebase(Product2 newProduct, Bitmap image) {
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        FirebaseStorage storage = FirebaseStorage.getInstance();
+//        StorageReference storageRef = storage.getReference();
+//
+//        // Thực hiện truy vấn để lấy số lượng sản phẩm hiện có
+//        db.collection("product").get().addOnSuccessListener(queryDocumentSnapshots -> {
+//                    int numberOfProducts = queryDocumentSnapshots.size();
+//                    int nextProductId = numberOfProducts + 1;
+//
+//                    String imageName = "product_" + nextProductId + ".jpg"; // Đặt tên cho hình ảnh trong Storage
+//                    StorageReference imageRef = storageRef.child("productImages/" + imageName);
+//                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//                    image.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+//                    byte[] imageData = baos.toByteArray();
+//                    UploadTask uploadTask = imageRef.putBytes(imageData);
+//
+//                    uploadTask.addOnSuccessListener(taskSnapshot -> {
+//                                // Lấy URL của hình ảnh sau khi upload
+//                                imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+//                                    String imageUrl = uri.toString();
+//
+//                                    // Gán tên hình ảnh vào sản phẩm để tham chiếu đến hình ảnh đã lưu trong Storage
+//                                    newProduct.setImagePath(imageUrl);
+//                                    // Thêm sản phẩm vào Firestore với ID được tính toán trước đó
+//                                    db.collection("product").add(newProduct)
+//                                            .addOnSuccessListener(documentReference -> {
+//                                                // Xử lý khi thêm sản phẩm thành công
+//                                                newProduct.setId(Integer.parseInt(documentReference.getId())); // Đặt ID của sản phẩm sau khi thêm thành công
+//                                            })
+//                                            .addOnFailureListener(e -> {
+//                                                // Xử lý khi thêm sản phẩm thất bại
+//                                                Toast.makeText(requireContext(), "Failed to add product", Toast.LENGTH_SHORT).show();
+//                                            });
+//
+//                                });
+//                            })
+//                            .addOnFailureListener(e -> {
+//                                // Xử lý lỗi khi upload hình ảnh
+//                            });
+//                })
+//                .addOnFailureListener(e -> {
+//                    // Xử lý lỗi khi đếm số lượng sản phẩm trong Firestore
+//                });
+    }
+
+
+
+    private boolean validateInput(Bitmap image, String productName, String productPrice, String description, String star, String category, String bestGame) {
+        // Kiểm tra xem tất cả các trường thông tin đã được nhập đầy đủ và hợp lệ hay không
+        return image != null &&
+                !productName.trim().isEmpty() &&
+                !productPrice.trim().isEmpty() &&
+                !description.trim().isEmpty() &&
+                !star.trim().isEmpty() &&
+                !category.trim().isEmpty() &&
+                !bestGame.trim().isEmpty();
+    }
+
 
     private void showOptionsDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
-        builder.setTitle("Chọn ảnh từ");
+        builder.setTitle("Select image from");
         // Thêm các tùy chọn vào danh sách
-        String[] options = {"Camera", "Thư viện ảnh"};
+        String[] options = {"Camera", "Gallery"};
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case 0:
-                        // Chọn chụp ảnh từ camera
                         dispatchTakePictureIntent();
                         break;
                     case 1:
-                        // Chọn ảnh từ thư viện ảnh
                         dispatchChooseFromGalleryIntent();
                         break;
                 }
@@ -252,19 +364,14 @@ public class ProductsFragment extends Fragment {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Gọi startActivityForResult để chụp ảnh từ camera và chờ kết quả trả về
         activityResultLauncher.launch(takePictureIntent);
-
     }
 
     private void dispatchChooseFromGalleryIntent() {
         // Tạo Intent để chọn ảnh từ thư viện ảnh
-//        Intent pickPhotoIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         Intent pickPhotoIntent = new Intent(MediaStore.ACTION_PICK_IMAGES);
         // Gọi startActivityForResult để chọn ảnh từ thư viện và chờ kết quả trả về
         activityResultLauncher.launch(pickPhotoIntent);
     }
-
-
-
 
     public void setCategoryList(List<Category> categoryList) {
         this.categoryList = categoryList;
@@ -276,7 +383,6 @@ public class ProductsFragment extends Fragment {
                 filteredProducts.add(product);
             }
         }
-        // Cập nhật danh sách sản phẩm trên ListView hoặc RecyclerView
         productAdapter.updateProducts(filteredProducts);
     }
     private Category getCategoryById(int categoryId) {
