@@ -284,14 +284,15 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
-                        android:text=""
                         android:ellipsize="end"
                         android:maxLines="2"
+                        android:text=""
+                        android:gravity="end"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/addressInfo"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintWidth_percent="0.6"
-                        app:layout_constraintWidth_default="wrap"/>
+                        app:layout_constraintWidth_default="wrap"
+                        app:layout_constraintWidth_percent="0.6" />
 
                     <ImageView
                         android:id="@+id/addressInfo"

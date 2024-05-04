@@ -147,7 +147,11 @@ public class PersonalInformationActivity extends AppCompatActivity {
                         binding.textViewUserName.setText(userModel.getName());
                         binding.textViewPhone.setText(userModel.getNumber());
                         binding.textViewEmail.setText(userModel.getEmail());
-                        binding.textViewAddress.setText(userModel.getAddress());
+                        String address = userModel.getAddress();
+                        if (address == null || address.isEmpty()) {
+                            address = "Chưa cung cấp thông tin";
+                        }
+                        binding.textViewAddress.setText(address);
                         binding.textViewGen.setText(convertGenderToString(userModel.getGender()));
 
                         if (binding.imageViewAvatar != null) {

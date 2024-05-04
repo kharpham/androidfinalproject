@@ -94,14 +94,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Địa chỉ nhận hàng"
-                            android:textSize="13sp"
+                            android:textSize="16sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/textViewLocation"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="[Tên Khách Hàng][0366 599 799]\n[100 Lý Thái Tổ, thị trấn GHIII, huyện UIHJKK, tỉnh UHHIII]" />
+                            android:text="" />
                     </LinearLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
@@ -121,20 +121,20 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="Tên"
-                        android:textSize="13sp"
+                        android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <EditText
-                        android:id="@+id/editTextText2"
+                        android:id="@+id/editTextName"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
                         android:ems="10"
                         android:inputType="text"
-                        android:text="Name"
+                        android:text=""
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/textView17"
@@ -157,7 +157,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="SĐT"
-                        android:textSize="13sp"
+                        android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -170,8 +170,8 @@
                         android:layout_marginEnd="8dp"
                         android:ems="10"
 
-                        android:inputType="text"
-                        android:text="0366 599 799"
+                        android:inputType="number"
+                        android:text=""
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/textViewPhone"
@@ -194,7 +194,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="Địa chỉ"
-                        android:textSize="13sp"
+                        android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -207,7 +207,7 @@
                         android:layout_marginEnd="8dp"
                         android:ems="10"
                         android:inputType="textMultiLine"
-                        android:text="100 Lý Thái Tổ, thị trấn GHIII, huyện UIHJKK, tỉnh UHHIII"
+                        android:text=""
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/textViewAddress"
@@ -221,7 +221,7 @@
                 android:layout_height="match_parent">
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/button"
+                    android:id="@+id/buttonConfirm"
                     android:layout_width="110dp"
                     android:layout_height="35dp"
                     android:layout_marginTop="27dp"

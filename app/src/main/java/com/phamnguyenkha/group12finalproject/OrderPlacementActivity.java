@@ -104,20 +104,31 @@ public class OrderPlacementActivity extends AppCompatActivity {
 
                 if (currentUser != null) {
                     if (cartProducts != null && !cartProducts.isEmpty()) {
-                        // Tạo một đơn hàng mới
-                        Order newOrder = new Order();
-                        newOrder.setUserId(currentUser.getUid());
-                        newOrder.setRecipientName(binding.textViewLocation.getText().toString()); // Đặt tên người nhận từ TextView
-                        newOrder.setOrderDate(new Date());
-                        double totalPrice = calculateTotalPrice(cartProducts);
-                        newOrder.setTotalPrice(totalPrice);
-                        newOrder.setProducts(cartProducts);
-                        newOrder.setPaymentMethod(paymentMethod);
+                        userInfo();
+                        if (isUserInfoComplete()) {
+                            // Tạo một đơn hàng mới
+                            Order newOrder = new Order();
+                            newOrder.setUserId(currentUser.getUid());
+                            newOrder.setRecipientName(binding.textViewLocation.getText().toString()); // Đặt tên người nhận từ TextView
+                            newOrder.setOrderDate(new Date());
+                            double totalPrice = calculateTotalPrice(cartProducts);
+                            newOrder.setTotalPrice(totalPrice);
+                            newOrder.setProducts(cartProducts);
+                            newOrder.setPaymentMethod(paymentMethod);
 
-                        saveOrderToFirestore(newOrder);
+                            saveOrderToFirestore(newOrder);
 
-                        clearCart();
-                        showSuccessDialog();
+                            clearCart();
+                            showSuccessDialog();
+                        } else {
+                            Intent intent = new Intent(OrderPlacementActivity.this, OrderConfirm.class);
+
+                            // Truyền thông tin từ textViewLocation sang OrderConfirmActivity
+                            intent.putExtra("USER_INFO", binding.textViewLocation.getText().toString());
+
+                            // Khởi chạy OrderConfirmActivity
+                            startActivity(intent);
+                        }
                     } else {
                         Toast.makeText(OrderPlacementActivity.this, "Giỏ hàng của bạn đang trống!", Toast.LENGTH_SHORT).show();
                     }
@@ -147,7 +158,9 @@ public class OrderPlacementActivity extends AppCompatActivity {
         binding.confirmAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(OrderPlacementActivity.this,OrderConfirm.class));
+                Intent intent = new Intent(OrderPlacementActivity.this, OrderConfirm.class);
+                intent.putExtra("USER_INFO", binding.textViewLocation.getText().toString());
+                startActivity(intent);
             }
         });
         binding.paymentMethod.setOnClickListener(new View.OnClickListener() {
@@ -195,8 +208,7 @@ public class OrderPlacementActivity extends AppCompatActivity {
                 if (documentSnapshot.exists()) {
                     UserModel userModel = documentSnapshot.toObject(UserModel.class);
                     if (userModel != null) {
-                        String userInfo = "[" + userModel.getName() + "]" + "[" + userModel.getNumber() + "]" + "\n" + "[" + userModel.getAddress() + "]";
-
+                        String userInfo =  "["+ userModel.getName() + "]"+ "[" + userModel.getNumber()  + "]"+ "[" + userModel.getAddress()+ "]";
                         binding.textViewLocation.setText(userInfo);
                     }
 
@@ -211,5 +223,9 @@ public class OrderPlacementActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
+    }
+    private boolean isUserInfoComplete() {
+        String userInfo = binding.textViewLocation.getText().toString();
+        return !userInfo.contains("null") && !userInfo.contains("[]");
     }
     }

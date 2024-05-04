@@ -52,7 +52,7 @@ public class Register extends AppCompatActivity {
                 String number = binding.phoneNumber.getText().toString().trim();
                 String email = binding.emailAddress.getText().toString().trim();
                 String password = binding.password.getText().toString().trim();
-                String address = "Chứa cung cấp địa chỉ";
+                String address = "";
                 String avatarUrl = "";
                 Date dob = null;
                 int gender = 2;

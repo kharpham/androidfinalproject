@@ -51,7 +51,7 @@ public class MyOrderAdapter extends ArrayAdapter<Order> {
             double totalOrderPrice = 0;
             int totalOrderQuantity = 0;
             for (Product product : products) {
-                totalOrderPrice += (product.getProductPrice() * product.getNumberInCart());
+                totalOrderPrice += 10000+1.02*(product.getProductPrice() * product.getNumberInCart());
                 totalOrderQuantity += product.getNumberInCart();
             }
             DecimalFormat decimalFormat = new DecimalFormat("#,###,###");
