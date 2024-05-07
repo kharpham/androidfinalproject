@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
@@ -220,10 +221,11 @@ public class RevenueFragment extends Fragment {
 
         lineChart.setData(lineData);
         lineChart.setVisibleXRangeMaximum(7);
-        lineChart.moveViewToX(currentDay);
+        float centerX = currentDay - 3.5f;
+        lineChart.moveViewToX(centerX);
         lineChart.setDragEnabled(true);
         lineChart.setScaleEnabled(true);
-
+        lineChart.animateX(1500, Easing.Linear);
         // Cập nhật LineChart
         lineChart.invalidate();
         setupChartValueSelectedListener();
