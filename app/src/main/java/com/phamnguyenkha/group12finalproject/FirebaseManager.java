@@ -176,6 +176,7 @@ public class FirebaseManager {
                         listener.onUsersLoaded(userModels);
                     } else {
                         listener.onError("Error getting user genders: " + task.getException().getMessage());
+                        Log.e("User with no gender provided", "None");
                     }
                 });
     }
@@ -190,18 +191,16 @@ public class FirebaseManager {
                             String userId = orderDocument.getString("userId");
 
                             // Lấy danh sách id của sản phẩm từ đơn hàng
-                            List<String> productIds = new ArrayList<>();
+                            List<String> productNames = new ArrayList<>();
                             if (orderDocument.contains("products")) {
                                 List<HashMap<String, Object>> products = (List<HashMap<String, Object>>) orderDocument.get("products");
                                 for (HashMap<String, Object> product : products) {
-                                    String productId = String.valueOf(product.get("id"));
-                                    productIds.add(productId);
+                                    String productName = String.valueOf(product.get("productName"));
+                                    productNames.add(productName);
                                 }
                             }
-                            Log.d("OrderInfo", "User ID: " + userId);
-                            Log.d("OrderInfo", "Product IDs: " + productIds.toString());
                             // Tạo đối tượng OrderInfo với thông tin userId và danh sách id sản phẩm
-                            OrderInfo order = new OrderInfo(userId, productIds);
+                            OrderInfo order = new OrderInfo(userId, productNames);
                             orderList.add(order);
                         }
                         listener.onOrdersLoaded(orderList);
