@@ -195,7 +195,7 @@ public class FirebaseManager {
                             if (orderDocument.contains("products")) {
                                 List<HashMap<String, Object>> products = (List<HashMap<String, Object>>) orderDocument.get("products");
                                 for (HashMap<String, Object> product : products) {
-                                    String productName = String.valueOf(product.get("productName"));
+                                    String productName = String.valueOf(product.get("id"));
                                     productNames.add(productName);
                                 }
                             }

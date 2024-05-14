@@ -34,13 +34,16 @@ import com.phamnguyenkha.models.UserModel;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     ArrayList<Product> products;
     ArrayList<Category> categories = new ArrayList<>();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseManager firebaseManager = new FirebaseManager();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +54,144 @@ public class MainActivity extends AppCompatActivity {
         initBestGame();
         initCategory();
         addEvents();
+        initPopularProductsByGender();
+    }
+
+    private void initPopularProductsByGender() {
+        firebaseManager.classifyOrdersAndFindPopularProductsByGender(new FirebaseManager.OnGenderClassificationListener() {
+            @Override
+            public void onGenderClassificationCompleted(Map<Integer, Integer> maleOrderCount, Map<Integer, Integer> femaleOrderCount, Map<Integer, Integer> unknownGenderOrderCount) {
+                // You can handle gender classification results here if needed
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        }, new FirebaseManager.OnPopularProductsLoadedListener() {
+            @Override
+            public void onPopularProductsLoaded(Map<Integer, List<String>> popularProductsByGender) {
+                // Assuming gender values: 0 = Male, 1 = Female, others = Unknown
+                List<String> maleProducts = popularProductsByGender.get(0);
+                List<String> femaleProducts = popularProductsByGender.get(1);
+                List<String> unknownGenderProducts = popularProductsByGender.get(-1);
+                Log.i("male products", maleProducts.toString());
+                Log.i("female products", femaleProducts.toString());
+
+                if (maleProducts != null) {
+                    loadProductsIntoRecyclerView(maleProducts, binding.recyclerGameMale);
+                    binding.progressBarMale.setVisibility(View.GONE);
+                }
+
+                if (femaleProducts != null) {
+                    loadProductsIntoRecyclerView(femaleProducts, binding.recyclerGameFemale);
+                    binding.progressBarGameFemale.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void loadProductsIntoRecyclerView(List<String> productIds, RecyclerView recyclerView) {
+        ArrayList<Product> list = new ArrayList<>();
+        List<Integer> productIdsInt = productIds.stream()
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+        Log.i("productIdsInt", productIdsInt.toString());
+        db.collection("product").whereIn("Id", productIdsInt)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+//                        categories = new ArrayList<>();
+                        if (error != null) {
+                            Log.e("Firestore error", error.getMessage());
+                            return;
+                        }
+                        for (DocumentChange dc : value.getDocumentChanges()) {
+                            int Id = ((Long) dc.getDocument().get("Id")).intValue();
+                            int ImagePath = getResources().getIdentifier((String) dc.getDocument().get("ImagePath"), "drawable", getPackageName());
+                            int CategoryId = ((Long) dc.getDocument().get("CategoryId")).intValue();
+                            String ProductName = (String) dc.getDocument().get("ProductName");
+                            int BestGame = ((Long) dc.getDocument().get("BestGame")).intValue();
+                            String Description = (String) dc.getDocument().get("Description");
+                            Object starObj = dc.getDocument().get("Star");
+                            int star;
+
+                            if (starObj instanceof Long) {
+                                star = ((Long) starObj).intValue();
+                            } else if (starObj instanceof Double) {
+                                star = ((Double) starObj).intValue();
+                            } else {
+                                // Handle other cases, such as null or unexpected types
+                                star = 0; // Set a default value or handle the case accordingly
+                            }
+                            double ProductPrice = ((Long) dc.getDocument().get("ProductPrice")).doubleValue();
+                            Product product = new Product(Id, ProductName, ProductPrice, BestGame, Description, ImagePath, CategoryId, star, 0);
+                            list.add(product);
+
+                        }
+                        if (list.size() > 0) {
+                            recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false));
+                            RecyclerView.Adapter adapter = new BestGameAdapter(list);
+                            recyclerView.setAdapter(adapter);
+                        }
+                        for (Product p : list) {
+                            Log.i("Product", p.toString());
+                        }
+                    }
+                });
+
+    }
+
+    private void initBestGame() {
+        ArrayList<Product> list = new ArrayList<>();
+        db.collection("product").whereEqualTo("BestGame", 1)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+//                        categories = new ArrayList<>();
+                        if (error != null) {
+                            Log.e("Firestore error", error.getMessage());
+                            return;
+                        }
+                        for (DocumentChange dc : value.getDocumentChanges()) {
+                            int Id = ((Long) dc.getDocument().get("Id")).intValue();
+                            int ImagePath = getResources().getIdentifier((String) dc.getDocument().get("ImagePath"), "drawable", getPackageName());
+                            int CategoryId = ((Long) dc.getDocument().get("CategoryId")).intValue();
+                            String ProductName = (String) dc.getDocument().get("ProductName");
+                            int BestGame = ((Long) dc.getDocument().get("BestGame")).intValue();
+                            String Description = (String) dc.getDocument().get("Description");
+                            Object starObj = dc.getDocument().get("Star");
+                            int star;
+
+                            if (starObj instanceof Long) {
+                                star = ((Long) starObj).intValue();
+                            } else if (starObj instanceof Double) {
+                                star = ((Double) starObj).intValue();
+                            } else {
+                                // Handle other cases, such as null or unexpected types
+                                star = 0; // Set a default value or handle the case accordingly
+                            }
+                            double ProductPrice = ((Long) dc.getDocument().get("ProductPrice")).doubleValue();
+                            list.add(new Product(Id, ProductName, ProductPrice, BestGame, Description, ImagePath, CategoryId, star, 0));
+
+                        }
+                        if (list.size() > 0) {
+                            binding.recyclerBestGame.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false));
+                            RecyclerView.Adapter adapter = new BestGameAdapter(list);
+                            binding.recyclerBestGame.setAdapter(adapter);
+                            binding.progressBarBestGame.setVisibility(View.GONE);
+                        }
+                        for (Product p : list) {
+                            Log.i("Product", p.toString());
+                        }
+
+
+                    }
+                });
     }
 
     private void addEvents() {
@@ -130,54 +271,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                         for (Category c : list) {
                             Log.i("Category", c.toString());}
-                    }
-                });
-    }
-
-    private void initBestGame() {
-        ArrayList<Product> list = new ArrayList<>();
-        db.collection("product").whereEqualTo("BestGame", 1)
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-//                        categories = new ArrayList<>();
-                        if (error != null) {
-                            Log.e("Firestore error", error.getMessage());
-                            return;
-                        }
-                        for (DocumentChange dc : value.getDocumentChanges()) {
-                            int Id = ((Long) dc.getDocument().get("Id")).intValue();
-                            int ImagePath = getResources().getIdentifier((String) dc.getDocument().get("ImagePath"), "drawable", getPackageName());
-                            int CategoryId = ((Long) dc.getDocument().get("CategoryId")).intValue();
-                            String ProductName = (String) dc.getDocument().get("ProductName");
-                            int BestGame = ((Long) dc.getDocument().get("BestGame")).intValue();
-                            String Description = (String) dc.getDocument().get("Description");
-                            Object starObj = dc.getDocument().get("Star");
-                            int star;
-
-                            if (starObj instanceof Long) {
-                                star = ((Long) starObj).intValue();
-                            } else if (starObj instanceof Double) {
-                                star = ((Double) starObj).intValue();
-                            } else {
-                                // Handle other cases, such as null or unexpected types
-                                star = 0; // Set a default value or handle the case accordingly
-                            }
-                            double ProductPrice = ((Long) dc.getDocument().get("ProductPrice")).doubleValue();
-                            list.add(new Product(Id, ProductName, ProductPrice, BestGame, Description, ImagePath, CategoryId, star, 0));
-
-                        }
-                        if (list.size() > 0) {
-                            binding.recyclerBestGame.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false));
-                            RecyclerView.Adapter adapter = new BestGameAdapter(list);
-                            binding.recyclerBestGame.setAdapter(adapter);
-                            binding.progressBarBestGame.setVisibility(View.GONE);
-                        }
-                        for (Product p : list) {
-                            Log.i("Product", p.toString());
-                        }
-
-
                     }
                 });
     }
