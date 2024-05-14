@@ -282,6 +282,7 @@ public class FirebaseManager {
                                             .map(Map.Entry::getKey)
                                             .collect(Collectors.toList());
                                     popularProductsByGender.put(entry.getKey(), popularProducts);
+
                                 }
                                 for (Map.Entry<Integer, List<String>> entry : popularProductsByGender.entrySet()) {
                                     Log.d("PopularProducts", "Gender: " + entry.getKey() + ", Products: " + entry.getValue().toString());
