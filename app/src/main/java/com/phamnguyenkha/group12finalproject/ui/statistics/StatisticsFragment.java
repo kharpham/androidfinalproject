@@ -266,8 +266,8 @@ public class StatisticsFragment extends Fragment {
 
     private void displayPopularProducts(List<String> popularProductsForWomen, TextView listPopularProductW) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (String productId : popularProductsForWomen) {
-            stringBuilder.append("#").append(productId).append("   ");
+        for (String productName : popularProductsForWomen) {
+            stringBuilder.append("#").append(productName).append("   ");
         }
         if (stringBuilder.length() > 0) {
             stringBuilder.deleteCharAt(stringBuilder.length() - 1);
